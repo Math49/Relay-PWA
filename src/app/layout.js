@@ -1,5 +1,8 @@
 "use client";
+
 import Link from "next/link";
+import '@/styles/globals.css';
+import { useEffect } from 'react';
 
 export default function RootLayout({ children }) {
   return (
@@ -10,13 +13,13 @@ export default function RootLayout({ children }) {
         <link rel="manifest" href="/manifest.json" />
         <title>Next.js avec PWA</title>
       </head>
-      <body>
+      <body className="C-bg-red C-text-black">
         <header>
           <nav>
-            <Link href="/">
+            <Link href="/" className="">
               Accueil
             </Link>
-            <Link href="/about">
+            <Link href="/about" className="">
               À propos
             </Link>
           </nav>

@@ -1,0 +1,49 @@
+@import "tailwindcss";
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+
+:root {
+  --white: #ffffff;
+  --black: #0C0909;
+  --red: #CA0538;
+  --red-var1: #EF0644;
+  --red-var2: #F2CED0;
+}
+
+body {
+  background-color: var(--red);
+  color: var(--black);
+  font-family: "Inter", sans-serif;
+}
+
+/* ✅ Créer des classes Tailwind qui utilisent les variables */
+.C-bg-red {
+  background-color: var(--red) !important;
+}
+.C-text-red {
+  color: var(--red) !important;
+}
+.C-bg-black {
+  background-color: var(--black) !important;
+}
+.C-text-black {
+  color: var(--black) !important;
+}
+.C-bg-white {
+  background-color: var(--white) !important;
+}
+.C-text-white {
+  color: var(--white) !important;
+}
+.C-bg-red-var1 {
+  background-color: var(--red-var1) !important;
+}
+.C-text-red-var1 {
+  color: var(--red-var1) !important;
+}
+.C-bg-red-var2 {
+  background-color: var(--red-var2) !important;
+}
+.C-text-red-var2 {
+  color: var(--red-var2) !important;
+}

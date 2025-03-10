@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 
 export default function InstallButton() {
 
-    console.log("InstallButton");
   const [deferredPrompt, setDeferredPrompt] = useState(null);
   const [showButton, setShowButton] = useState(false);
 
