@@ -1,25 +1,8 @@
 "use client";
 import { Suspense } from "react";
 import Loading from "@/components/LoadingPage";
-import { useEffect, useState } from "react";
-import { getAuthToken } from "@/services/auth";
-import { useRouter } from "next/navigation";
 
 export default function HomePage() {
-
-  // const router = useRouter();
-  // const [isAuth, setIsAuth] = useState(false);
-
-  // useEffect(() => {
-  //   const token = getAuthToken();
-  //   if (!token) {
-  //     router.push("/login"); // 🔥 Redirige vers la page de connexion si pas de token
-  //   } else {
-  //     setIsAuth(true);
-  //   }
-  // }, []);
-
-  // if (!isAuth) return null;
 
   return (
     <Suspense fallback={<Loading />}>
