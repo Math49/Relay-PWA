@@ -7,7 +7,8 @@
   --black: #0C0909;
   --red: #CA0538;
   --red-var1: #EF0644;
-  --red-var2: #F2CED0;
+  --red-var2: #f2ced0;
+  --red-var2-25: rgba(242, 206, 208, 0.25);
 }
 
 body {
@@ -46,4 +47,10 @@ body {
 }
 .C-text-red-var2 {
   color: var(--red-var2) !important;
+}
+.C-border-red-var2 {
+  border-color: var(--red-var2) !important;
+}
+.C-shadow-red-var2 {
+  box-shadow: 0 3px 4px var(--red-var2-25) !important;
 }
