@@ -30,7 +30,7 @@ export default function HomePage() {
 
 function MainContent() {
   return (
-    <div className="flex items-center justify-center min-h-screen text-white">
+    <div className="flex items-center justify-center min-h-screen C-bg-white text-black">
       <h1 className="text-4xl font-bold">Bienvenue sur ma PWA</h1>
     </div>
   );
