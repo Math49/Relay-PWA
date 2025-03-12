@@ -5,29 +5,21 @@ const TOKEN_KEY = "auth_token";
 
 export async function login(name, password) {
     try {
-      // 🔥 Étape 1 : Récupérer le token CSRF
-      await fetchData("/sanctum/csrf-cookie", {
-        method: "GET",
-        credentials: "include",
-      });
   
-      // 🔥 Étape 2 : Envoyer la requête de connexion
+      // Envoyer la requête de connexion
       const res = await fetchData("/login", {
         method: "POST",
-        credentials: "include", // ✅ Envoie les cookies pour Sanctum
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({ Name: name, Password: password }),
       });
-      console.log("res", res);
       if (!res.ok) {
         throw new Error(`Erreur HTTP! Statut: ${res.status}`);
       }
   
       return await res.json();
     } catch (error) {
-      console.error("Erreur API:", error);
       return null;
     }
   }

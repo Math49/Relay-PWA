@@ -10,7 +10,7 @@ export default function HomePage() {
     e.preventDefault();
     login(e.target[0].value, e.target[1].value)
       .then((res) => {
-        console.log(res);
+        console.log("res", res);
       })
       .catch((err) => {
         setError("Identifiants incorrects !");

@@ -1,4 +1,4 @@
-const API_BASE_URL = "http://127.0.0.1:8000"; // Remplace par l'URL de ton API
+const API_BASE_URL = "http://127.0.0.1:8000/api"; // Remplace par l'URL de ton API
 
 // 🔥 Fonction générique pour appeler l'API
 export async function fetchData(endpoint, options = {}) {
@@ -9,10 +9,13 @@ export async function fetchData(endpoint, options = {}) {
       throw new Error(`Erreur HTTP! Statut: ${res.status}`);
     }
 
+    console.log("path", `${API_BASE_URL}${endpoint}`);
     console.log("res", res);
-    return await res;
+
+    return res;
   } catch (error) {
-    console.error("Erreur API:", error.message);
+    console.log("path", `${API_BASE_URL}${endpoint}`);
+    console.error("Erreur API:", error);
     return null;
   }
 }
