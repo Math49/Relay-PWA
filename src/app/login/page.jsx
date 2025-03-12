@@ -1,20 +1,24 @@
 "use client";
 import { useEffect, useState } from "react";
-import { getAuthToken, login } from "@/services/auth";
 import { useRouter } from "next/navigation";
+import { useAuth } from "@/context/AuthProvider";
 
 export default function HomePage() {
   const [error, setError] = useState(null);
+  const router = useRouter();
+
+  const { login } = useAuth();
 
   const handleLogin = async (e) => {
     e.preventDefault();
+
     login(e.target[0].value, e.target[1].value)
-      .then((res) => {
-        console.log("res", res);
-      })
-      .catch((err) => {
-        setError("Identifiants incorrects !");
-      });
+    .then(() => {
+      router.push("/");
+    })
+    .catch((error) => {
+      setError("Identifiant ou mot de passe incorrect");
+    });
   };
 
   return (
@@ -57,7 +61,7 @@ export default function HomePage() {
             </div>
             <button
               type="submit"
-              className="w-[100%] py-[1vh] C-bg-red C-text-white rounded-[20px] font-bold text-2xl"
+              className="w-[100%] py-[1vh] C-bg-red C-text-white rounded-[20px] font-bold text-2xl cursor-pointer "
             >
               Connexion
             </button>

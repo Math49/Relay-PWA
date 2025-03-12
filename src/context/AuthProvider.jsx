@@ -1,39 +1,57 @@
 "use client";
 import { createContext, useContext, useEffect, useState } from "react";
-import { getAuthToken, removeAuthToken } from "@/services/auth";
+import { getAuthToken, setAuthToken, removeAuthToken, login as authLogin } from "@/services/auth";
 import { useRouter } from "next/navigation";
 
 const AuthContext = createContext();
 
 export function AuthProvider({ children }) {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [user, setUser] = useState(null);
+  const [token, setToken] = useState(getAuthToken());
   const router = useRouter();
 
+  // ✅ Charger user depuis localStorage après le montage
   useEffect(() => {
-    const token = getAuthToken();
-    if (!token) {
-      router.push("/login"); // 🔥 Redirige si pas de token
-    } else {
-      setIsAuthenticated(true);
+    if (typeof window !== "undefined") {
+      const storedUser = localStorage.getItem("user");
+      if (storedUser) setUser(JSON.parse(storedUser));
     }
   }, []);
 
-  // ✅ Fonction de déconnexion
+  useEffect(() => {
+    if (!token) {
+      router.push("/login");
+    }
+  }, [token]);
+
+  const login = async (name, password) => {
+    const res = await authLogin(name, password);
+    if (res && res.token) {
+      setAuthToken(res.token);
+      setUser(res.user);
+      setToken(res.token);
+
+      localStorage.setItem("user", JSON.stringify(res.user));
+
+      router.push("/");
+    }
+  };
+
   const logout = () => {
     removeAuthToken();
-    setIsAuthenticated(false);
+    setUser(null);
+    setToken(null);
+    localStorage.removeItem("user");
     router.push("/login");
   };
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated, logout }}>
+    <AuthContext.Provider value={{ user, token, login, logout }}>
       {children}
     </AuthContext.Provider>
   );
 }
 
-// ✅ Hook pour utiliser l'auth partout
 export function useAuth() {
   return useContext(AuthContext);
 }
- 

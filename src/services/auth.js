@@ -6,7 +6,6 @@ const TOKEN_KEY = "auth_token";
 export async function login(name, password) {
     try {
   
-      // Envoyer la requête de connexion
       const res = await fetchData("/login", {
         method: "POST",
         headers: {
@@ -14,10 +13,9 @@ export async function login(name, password) {
         },
         body: JSON.stringify({ Name: name, Password: password }),
       });
-      if (!res.ok) {
-        throw new Error(`Erreur HTTP! Statut: ${res.status}`);
-      }
-  
+
+      //setAuthToken(res.token);
+
       return await res.json();
     } catch (error) {
       return null;

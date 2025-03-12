@@ -54,3 +54,7 @@ body {
 .C-shadow-red-var2 {
   box-shadow: 0 3px 4px var(--red-var2-25) !important;
 }
+
+button.C-bg-red:hover {
+  background-color: var(--red-var1) !important;
+}

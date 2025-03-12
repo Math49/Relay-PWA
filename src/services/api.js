@@ -9,13 +9,8 @@ export async function fetchData(endpoint, options = {}) {
       throw new Error(`Erreur HTTP! Statut: ${res.status}`);
     }
 
-    console.log("path", `${API_BASE_URL}${endpoint}`);
-    console.log("res", res);
-
     return res;
   } catch (error) {
-    console.log("path", `${API_BASE_URL}${endpoint}`);
-    console.error("Erreur API:", error);
     return null;
   }
 }

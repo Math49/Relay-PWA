@@ -1,21 +1,16 @@
 "use client";
 import { Suspense } from "react";
 import Loading from "@/components/LoadingPage";
+import { useAuth } from "@/context/AuthProvider";
+
 
 export default function HomePage() {
 
-  return (
-    <Suspense fallback={<Loading />}>
-      <MainContent />
-    </Suspense>
-  );
-}
+   const { user } = useAuth();
 
-function MainContent() {
-  return (
-    <div className="flex items-center justify-center min-h-screen text-white">
-      <h1 className="text-4xl font-bold">Bienvenue sur ma PWA</h1>
-    </div>
-  );
+    return (
+      <div className="flex items-center justify-center min-h-screen text-white">
+        <h1 className="text-4xl font-bold">Bienvenue sur ma PWA - {user?.Name}</h1>
+      </div>
+    );
 }
-
