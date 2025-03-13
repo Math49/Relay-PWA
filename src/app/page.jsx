@@ -9,7 +9,7 @@ export default function HomePage() {
    const { user } = useAuth();
 
     return (
-      <div className="flex items-center justify-center min-h-screen text-white">
+      <div className="flex items-center justify-center relative z-10 text-white">
         <h1 className="text-4xl font-bold">Bienvenue sur ma PWA - {user?.Name}</h1>
       </div>
     );

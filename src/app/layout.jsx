@@ -7,6 +7,7 @@ import MobileLayout from "@/layouts/MobileLayout";
 import DesktopLayout from "@/layouts/DesktopLayout";
 import { usePathname } from "next/navigation";
 import { AuthProvider } from "@/context/AuthProvider";
+import {HeroUIProvider} from "@heroui/react";
 
 export default function RootLayout({ children }) {
   const isMobile = useMediaQuery("(max-width: 768px)");
@@ -21,12 +22,13 @@ export default function RootLayout({ children }) {
       <HeadLayout title="Relay - Accueil">
 
       </HeadLayout>
-      
-      <body className="C-bg-red C-text-black h-[100vh] w-[100vw] overflow-hidden">
-        <AuthProvider>
-          {isMobile ? <MobileLayout title={"Accueil"}>{children}</MobileLayout> : <DesktopLayout>{children}</DesktopLayout>}
-        </AuthProvider>
-      </body>
+        <body className="C-bg-red C-text-black h-[100vh] w-[100vw] overflow-hidden">
+      <HeroUIProvider>
+          <AuthProvider>
+            {isMobile ? <MobileLayout title={"Accueil"}>{children}</MobileLayout> : <DesktopLayout>{children}</DesktopLayout>}
+          </AuthProvider>
+      </HeroUIProvider>
+        </body>
     </html>
   );
 }

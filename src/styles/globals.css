@@ -17,6 +17,18 @@ body {
   font-family: "Inter", sans-serif;
 }
 
+
+.modal {
+  transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.modal.hidden {
+  opacity: 0;
+  transform: translateY(-20px);
+}
+
 /* ✅ Créer des classes Tailwind qui utilisent les variables */
 .C-bg-red {
   background-color: var(--red) !important;
