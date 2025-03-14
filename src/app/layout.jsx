@@ -25,7 +25,7 @@ export default function RootLayout({ children }) {
         <body className="C-bg-red C-text-black h-[100vh] w-[100vw] overflow-hidden">
       <HeroUIProvider>
           <AuthProvider>
-            {isMobile ? <MobileLayout title={"Accueil"}>{children}</MobileLayout> : <DesktopLayout>{children}</DesktopLayout>}
+            {isMobile ? <MobileLayout title={"Accueil"}>{children}</MobileLayout> : <DesktopLayout title={"Accueil"}>{children}</DesktopLayout>}
           </AuthProvider>
       </HeroUIProvider>
         </body>
