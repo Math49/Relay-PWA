@@ -1,34 +1,49 @@
 "use client";
 import "@/styles/globals.css";
-import Background from "@/components/background";
 import HeadLayout from "@/layouts/HeadLayout";
-import { useMediaQuery } from "@/hooks/useMediaQuery";
 import MobileLayout from "@/layouts/MobileLayout";
 import DesktopLayout from "@/layouts/DesktopLayout";
+import { useMediaQuery } from "@/hooks/useMediaQuery";
 import { usePathname } from "next/navigation";
 import { AuthProvider } from "@/context/AuthProvider";
-import {HeroUIProvider} from "@heroui/react";
+import { HeroUIProvider } from "@heroui/react";
+import React from "react";
 
 export default function RootLayout({ children }) {
   const isMobile = useMediaQuery("(max-width: 768px)");
-  const pathname = usePathname(); // ✅ Récupère le chemin actuel
+  const pathname = usePathname();
+
+  let title = "";
+
+  switch (pathname) {
+    case "/":
+      title = "Accueil";
+      break;
+  
+    default:
+      break;
+  }
 
   // 🔥 Si on est sur "/login", ne pas appliquer de layout
   if (pathname.startsWith("/login")) {
     return <>{children}</>;
   }
+
   return (
     <html lang="fr">
-      <HeadLayout title="Relay - Accueil">
+      <HeadLayout title={title} />
 
-      </HeadLayout>
-        <body className="C-bg-red C-text-black h-[100vh] w-[100vw] overflow-hidden">
-      <HeroUIProvider>
+      <body className="C-bg-red C-text-black h-[100vh] w-[100vw] overflow-hidden">
+        <HeroUIProvider>
           <AuthProvider>
-            {isMobile ? <MobileLayout title={"Accueil"}>{children}</MobileLayout> : <DesktopLayout title={"Accueil"}>{children}</DesktopLayout>}
+            {isMobile ? (
+              <MobileLayout title={title}>{children}</MobileLayout>
+            ) : (
+              <DesktopLayout title={title}>{children}</DesktopLayout>
+            )}
           </AuthProvider>
-      </HeroUIProvider>
-        </body>
+        </HeroUIProvider>
+      </body>
     </html>
   );
 }
