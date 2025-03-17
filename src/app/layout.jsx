@@ -33,7 +33,7 @@ export default function RootLayout({ children }) {
     <html lang="fr">
       <HeadLayout title={title} />
 
-      <body className="C-bg-red C-text-black h-[100vh] w-[100vw] overflow-hidden">
+      <body className="C-bg-red C-text-black min-h-screen w-[100vw] overflow-x-hidden">
         <HeroUIProvider>
           <AuthProvider>
             {isMobile ? (

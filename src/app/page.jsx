@@ -10,7 +10,7 @@ export default function HomePage() {
   const isMobile = useMediaQuery("(max-width: 768px)");
 
   return (
-    <div className="flex flex-col gap-[5vh] items-center justify-center relative z-10 text-white w-[100%] h-[100%] p-5">
+    <div className="flex flex-col gap-[5vh] items-center justify-center relative z-10 text-white w-[100%] p-5">
       <div>
         <h2 className="text-black">messages</h2>
       </div>
@@ -80,8 +80,8 @@ export default function HomePage() {
         <></>
       )}
       <Separateur />
-      <div>
-        <h2 className="text-black">Etat du stock</h2>
+      <div className="flex flex-col items-start justify-start w-[100%]">
+        <h2 className="C-text-black font-bold text-2xl mb-6">Etat du stock</h2>
       </div>
     </div>
   );
