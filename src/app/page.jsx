@@ -8,6 +8,7 @@ import { getStocks } from "@/services/stock";
 import { getCategories } from "@/services/category";
 import Footer from "@/components/Footer";
 import MessageCarouselMobile from "@/components/MessageCarouselMobile";
+import MessageCarouselDesktop from "@/components/MessageCarouselDesktop";
 
 export default function HomePage() {
   const [stocks, setStocks] = useState([]);
@@ -71,7 +72,7 @@ export default function HomePage() {
   return (
     <div className="flex flex-col gap-[5vh] items-center justify-center relative z-10 text-white w-[100%] p-5">
       <div>
-        {isMobile ? <MessageCarouselMobile storeId={user?.ID_store} /> : <></>}
+        {isMobile ? <MessageCarouselMobile storeId={user?.ID_store} /> : <MessageCarouselDesktop storeId={user?.ID_store} />}
       </div>
       {isMobile ? (
         <div className="flex flex-col items-start justify-start w-[100%]">
@@ -142,7 +143,7 @@ export default function HomePage() {
       <div className="flex flex-col items-start justify-start w-[100%]">
         <h2 className="C-text-black font-bold text-2xl mb-6">Etat du stock</h2>
         <div className="w-[100%] h-[100%] flex flex-col items-center justify-center gap-5">
-          <div className="relative w-[100%] h-[25px] bg-gray-300 rounded-full overflow-hidden">
+          <div className="relative w-[100%] sm:w-[70%] h-[25px] bg-gray-300 rounded-full overflow-hidden">
             {categoryStockCount.map((item, index) => (
               <div
                 key={index}
@@ -156,11 +157,11 @@ export default function HomePage() {
             ))}
           </div>
 
-          <div className="grid grid-cols-2 gap-4 mt-6">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-6">
             {categoryStockCount.map((item, index) => (
               <div
                 key={index}
-                className="p-4 rounded-[20px] shadow-md bg-white flex flex-col gap-5 items-center justify-center border-t-[5px] w-[45vw] h-[12vh]"
+                className="p-4 rounded-[20px] shadow-md bg-white flex flex-col gap-5 items-center justify-center border-t-[5px] w-[45vw] sm:w-[20vw] h-[12vh]"
                 style={{ borderColor: colors[index % colors.length] }}
               >
                 <p className="text-xl font-bold C-text-black">
