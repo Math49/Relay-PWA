@@ -8,15 +8,12 @@ export async function login(name, password) {
   
       const res = await fetchData("/login", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
         body: JSON.stringify({ Name: name, Password: password }),
       });
 
       //setAuthToken(res.token);
 
-      return await res.json();
+      return await res;
     } catch (error) {
       return null;
     }
