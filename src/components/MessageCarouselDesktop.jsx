@@ -31,17 +31,17 @@ export default function MessageCarouselDesktop({ storeId }) {
   };
 
   return (
-    <div className="relative w-full flex justify-center items-center mt-5">
+    <div className="relative w-[90%] flex justify-center items-center mt-5">
       {/* 🔥 Flèche gauche */}
       <button
         onClick={prevSlide}
-        className="absolute left-0 z-10 bg-red-600 text-white p-3 rounded-full shadow-md hover:bg-red-700 transition"
+        className="absolute left-0 z-10 C-bg-red text-white w-[40px] h-[40px] p-3 rounded-full flex justify-center items-center shadow-md transition"
       >
-        ❮
+        <i className="fa-solid fa-chevron-left text-2xl"></i>
       </button>
 
       {/* 🔥 Zone des messages */}
-      <div className="overflow-hidden w-[80%]">
+      <div className="overflow-hidden py-5 w-[80%]">
         <AnimatePresence mode="wait">
           <motion.div
             key={currentIndex}
@@ -51,14 +51,18 @@ export default function MessageCarouselDesktop({ storeId }) {
             exit={{ opacity: 0, x: 50 }}
             transition={{ duration: 0.5 }}
           >
-            {messages.slice(currentIndex, currentIndex + messagesPerSlide).map((message, index) => (
-              <div
-                key={index}
-                className="bg-red-600 text-white p-5 rounded-[20px] shadow-md w-[30%]"
-              >
-                <p className="text-lg">{message.Message}</p>
-              </div>
-            ))}
+            {messages
+              .slice(currentIndex, currentIndex + messagesPerSlide)
+              .map((message, index) => (
+                <div
+                  key={index}
+                  className="C-bg-red text-white flex flex-col items-center p-5 rounded-[20px] w-[30%] relative"
+                >
+                  <div className="absolute rounded-[30px] C-bg-red-var2 w-[90%] h-[10vh] bottom-[-1vh] z-[-1]"></div>
+
+                  <p className="text-lg">{message.Message}</p>
+                </div>
+              ))}
           </motion.div>
         </AnimatePresence>
       </div>
@@ -66,9 +70,9 @@ export default function MessageCarouselDesktop({ storeId }) {
       {/* 🔥 Flèche droite */}
       <button
         onClick={nextSlide}
-        className="absolute right-0 z-10 bg-red-600 text-white p-3 rounded-full shadow-md hover:bg-red-700 transition"
+        className="absolute right-0 z-10 C-bg-red text-white w-[40px] h-[40px] p-3 rounded-full flex justify-center items-center shadow-md transition"
       >
-        ❯
+        <i className="fa-solid fa-chevron-right text-2xl"></i>
       </button>
     </div>
   );

@@ -71,9 +71,7 @@ export default function HomePage() {
 
   return (
     <div className="flex flex-col gap-[5vh] items-center justify-center relative z-10 text-white w-[100%] p-5">
-      <div>
         {isMobile ? <MessageCarouselMobile storeId={user?.ID_store} /> : <MessageCarouselDesktop storeId={user?.ID_store} />}
-      </div>
       {isMobile ? (
         <div className="flex flex-col items-start justify-start w-[100%]">
           <h2 className="C-text-black font-bold text-2xl mb-6">Navigation</h2>
