@@ -21,23 +21,12 @@ export default function HomePage() {
     const fetchData = async () => {
       if (user && user.ID_store) {
         const stocksData = await getStocks(user.ID_store);
-        const categoriesData = await getCategories();
+        const categoriesData = await getCategories(user.ID_store);
 
         setStocks(stocksData);
         setCategories(categoriesData);
 
-        const usedCategoryIds = [
-          ...new Set(stocksData.map((stock) => stock.product?.ID_category)),
-        ];
-        const filteredCategories = categoriesData.filter((cat) =>
-          usedCategoryIds.includes(cat.ID_category)
-        );
-
-        setValidCategories(filteredCategories);
-
-        if (filteredCategories.length > 0) {
-          setSelectedCategory(filteredCategories[0].ID_category);
-        }
+        setSelectedCategory(categoriesData[0]?.ID_category);
       }
     };
 
@@ -87,7 +76,7 @@ export default function HomePage() {
 
       {/* 🏷 Catégories */}
       <div className="flex items-center justify-start gap-3 w-[100%] px-4 overflow-x-auto scrollbar-hide">
-        {validCategories.map((category) => (
+        {categories.map((category) => (
           <button
             key={category.ID_category}
             onClick={() => setSelectedCategory(category.ID_category)}
@@ -97,7 +86,7 @@ export default function HomePage() {
                 : "border-gray-300 text-gray-500 bg-white"
             }`}
           >
-            {category.Label}
+            {category.category.Label}
           </button>
         ))}
       </div>
@@ -109,7 +98,7 @@ export default function HomePage() {
           onClick={() => setSortByName((prev) => (prev === 1 ? -1 : prev === -1 ? 0 : 1))}
           className="flex items-center gap-2 bg-white text-black px-3 py-2 rounded-md shadow-md"
         >
-          <i className="fas fa-sort"></i> Par nom
+          <i className="fas fa-sort" aria-hidden="true"></i> Par nom
         </button>
 
         {/* 📌 Filtre par quantité */}
@@ -119,7 +108,7 @@ export default function HomePage() {
           }
           className="flex items-center gap-2 bg-white text-black px-3 py-2 rounded-md shadow-md"
         >
-          <i className="fas fa-sort"></i> Par quantité
+          <i className="fas fa-sort" aria-hidden="true"></i> Par quantité
         </button>
 
         {/* 🔍 Recherche par code-barre */}
@@ -131,7 +120,7 @@ export default function HomePage() {
             onChange={(e) => setSearchTerm(e.target.value)}
             className="px-4 py-2 border rounded-md text-black shadow-md"
           />
-          <i className="fas fa-search absolute right-3 top-3 text-red-500"></i>
+          <i className="fas fa-search absolute right-3 top-3 text-red-500" aria-hidden="true"></i>
         </div>
       </div>
 
