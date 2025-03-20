@@ -17,7 +17,7 @@ export default function MobileLayout({ children, title, city }) {
     <div className="flex flex-col items-center C-bg-red w-full min-h-screen">
       {/* HEADER */}
       <div className="flex items-end justify-between w-full h-[10vh] pb-[2vh] relative z-20 px-[5vw]">
-        <button onClick={openModal}>
+        <button onClick={openModal} className="cursor-pointer">
           <img src="/images/elements/Nav menu.svg" className="w-auto h-[5vh]" />
         </button>
 

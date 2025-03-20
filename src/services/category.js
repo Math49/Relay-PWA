@@ -1,8 +1,8 @@
 const { fetchData } = require("./api");
 
-export async function getCategories() {
+export async function getCategories(ID_store) {
     try {
-        const res = await fetchData(`/categories`, {
+        const res = await fetchData(`/categoryEnable/${ID_store}`, {
             method: "GET",
         });
     

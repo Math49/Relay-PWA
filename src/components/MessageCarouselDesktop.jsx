@@ -37,7 +37,7 @@ export default function MessageCarouselDesktop({ storeId }) {
         onClick={prevSlide}
         className="absolute left-0 z-10 C-bg-red text-white w-[40px] h-[40px] p-3 rounded-full flex justify-center items-center shadow-md transition"
       >
-        <i className="fa-solid fa-chevron-left text-2xl"></i>
+        <i className="fa-solid fa-chevron-left text-2xl" aria-hidden="true"></i>
       </button>
 
       {/* 🔥 Zone des messages */}
@@ -72,7 +72,7 @@ export default function MessageCarouselDesktop({ storeId }) {
         onClick={nextSlide}
         className="absolute right-0 z-10 C-bg-red text-white w-[40px] h-[40px] p-3 rounded-full flex justify-center items-center shadow-md transition"
       >
-        <i className="fa-solid fa-chevron-right text-2xl"></i>
+        <i className="fa-solid fa-chevron-right text-2xl" aria-hidden="true"></i>
       </button>
     </div>
   );

@@ -60,13 +60,13 @@ export default function MessageCarouselMobile({ storeId }) {
         className="absolute right-[15vw] bottom-0 transform -translate-y-1/2 text-white text-3xl"
         onClick={prevMessage}
       >
-        <i className="fa-solid fa-chevron-left"></i>
+        <i className="fa-solid fa-chevron-left" aria-hidden="true"></i>
       </button>
       <button
         className="absolute right-[5vw] bottom-0 transform -translate-y-1/2 text-white text-3xl"
         onClick={nextMessage}
       >
-                <i className="fa-solid fa-chevron-right"></i>
+                <i className="fa-solid fa-chevron-right" aria-hidden="true"></i>
 
       </button>
     </div>
