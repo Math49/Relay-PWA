@@ -46,7 +46,7 @@ export default function HomePage() {
 
     if (searchTerm) {
       filtered = filtered.filter((stock) =>
-        stock.product?.Barcode.includes(searchTerm) ||
+        stock.product?.Barcode.startsWith(searchTerm) ||
         stock.product?.Label.toLowerCase().includes(searchTerm.toLowerCase())
       );
     }
@@ -100,7 +100,14 @@ export default function HomePage() {
           onClick={() => setSortByName((prev) => (prev === 1 ? -1 : prev === -1 ? 0 : 1))}
           className="flex items-center gap-2 bg-white text-black px-3 py-2 rounded-md shadow-md"
         >
-          <i className="fas fa-sort" aria-hidden="true"></i> Par nom
+            {sortByName === 1 ? (
+              <i className="fas fa-sort-up" aria-hidden="true"></i>
+            ) : sortByName === -1 ? (
+              <i className="fas fa-sort-down" aria-hidden="true"></i>
+            ) : (
+              <i className="fas fa-sort" aria-hidden="true"></i>
+            )}
+            Par nom
         </button>
 
         {/* 📌 Filtre par quantité */}
@@ -110,14 +117,21 @@ export default function HomePage() {
           }
           className="flex items-center gap-2 bg-white text-black px-3 py-2 rounded-md shadow-md"
         >
-          <i className="fas fa-sort" aria-hidden="true"></i> Par quantité
+          {sortByQuantity === 1 ? (
+              <i className="fas fa-sort-up" aria-hidden="true"></i>
+            ) : sortByQuantity === -1 ? (
+              <i className="fas fa-sort-down" aria-hidden="true"></i>
+            ) : (
+              <i className="fas fa-sort" aria-hidden="true"></i>
+            )}
+            Par quantité
         </button>
 
         {/* 🔍 Recherche par code-barre */}
         <div className="relative flex items-center">
           <input
             type="text"
-            placeholder="Code barre"
+            placeholder="Recherche"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             className="px-4 py-2 border rounded-md text-black shadow-md"
