@@ -67,6 +67,7 @@ export default function HomePage() {
 
     setFilteredStocks(filtered);
   };
+  const colors = ["#FF6384", "#36A2EB", "#FFCE56", "#4CAF50", "#9C27B0"];
 
   return (
     <div className="flex flex-col gap-[3vh] items-center justify-center relative z-10 text-white w-[100%] p-5">
@@ -76,15 +77,16 @@ export default function HomePage() {
 
       {/* 🏷 Catégories */}
       <div className="flex items-center justify-start gap-3 w-[100%] px-4 overflow-x-auto scrollbar-hide">
-        {categories.map((category) => (
+        {categories.map((category, index) => (
           <button
             key={category.ID_category}
             onClick={() => setSelectedCategory(category.ID_category)}
-            className={`px-5 py-2 text-lg font-bold rounded-full border-[3px] transition-all ${
+            className={`p-4 text-xl rounded-[20px] border-b-[5px] transition-all bg-white ${
               selectedCategory === category.ID_category
-                ? "border-red-500 text-red-500 bg-white"
-                : "border-gray-300 text-gray-500 bg-white"
+                ? "!border-red-500 text-red-500 "
+                : "border-gray-300 C-text-black "
             }`}
+            style={{ borderColor: colors[index % colors.length] }}
           >
             {category.category.Label}
           </button>
@@ -120,7 +122,7 @@ export default function HomePage() {
             onChange={(e) => setSearchTerm(e.target.value)}
             className="px-4 py-2 border rounded-md text-black shadow-md"
           />
-          <i className="fas fa-search absolute right-3 top-3 text-red-500" aria-hidden="true"></i>
+          <i className="fas fa-search absolute right-3 top-3 C-text-red" aria-hidden="true"></i>
         </div>
       </div>
 
@@ -132,12 +134,12 @@ export default function HomePage() {
           filteredStocks.map((stock) => (
             <div
               key={stock.ID_stock}
-              className="flex justify-between items-center p-3 bg-white rounded-xl shadow-md border-[2px] border-red-500 mb-2"
+              className="flex justify-between items-center p-3 bg-white rounded-xl shadow-md border-[2px] C-border-red mb-2"
             >
               {/* 📸 Image produit */}
               <div className="flex items-center gap-3">
                 <img
-                  src={stock.product?.Image}
+                  src={!stock.product.Image ? stock.product.Image : "images/elements/default-product.jpg"}
                   alt={stock.product?.Label}
                   className="w-12 h-12 rounded-md object-cover"
                 />
@@ -150,7 +152,7 @@ export default function HomePage() {
               </div>
 
               {/* 📦 Stock et chariot */}
-              <div className="flex items-center gap-3 text-red-500 text-lg">
+              <div className="flex items-center gap-3 C-text-red text-lg">
                 <div className="flex items-center gap-1">
                   <i className="fas fa-box"></i>
                   {stock.Nmb_boxes}

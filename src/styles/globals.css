@@ -36,6 +36,9 @@ body {
 .C-text-red {
   color: var(--red) !important;
 }
+.C-border-red {
+  border-color: var(--red) !important;
+}
 .C-bg-black {
   background-color: var(--black) !important;
 }
