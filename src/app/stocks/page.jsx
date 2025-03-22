@@ -5,6 +5,10 @@ import { getStocks } from "@/services/stock";
 import { getCategories } from "@/services/category";
 import { useAuth } from "@/context/AuthProvider";
 import Separateur from "@/components/Separateur";
+import { useMediaQuery } from "@/hooks/useMediaQuery";
+import StockListDesktop from "@/components/StockListDesktop";
+import StockListMobile from "@/components/StockListMobile";
+import FloatingButtonStock from "@/components/FloatingButtonStock";
 
 export default function HomePage() {
   const [stocks, setStocks] = useState([]);
@@ -14,11 +18,10 @@ export default function HomePage() {
   const [sortByName, setSortByName] = useState(0);
   const [sortByQuantity, setSortByQuantity] = useState(0);
   const [searchTerm, setSearchTerm] = useState("");
-  const [expandedStockId, setExpandedStockId] = useState(null);
 
-  const toggleExpand = (id) => {
-    setExpandedStockId((prev) => (prev === id ? null : id));
-  };
+  const isMobile = useMediaQuery("(max-width: 768px)");
+
+  const [isEditing, setIsEditing] = useState(false);
 
   const { user } = useAuth();
 
@@ -74,21 +77,42 @@ export default function HomePage() {
     setFilteredStocks(filtered);
   };
   const colors = ["#FF6384", "#36A2EB", "#FFCE56", "#4CAF50", "#9C27B0"];
-  console.log(filteredStocks);
+  
+  const handleAdd = () => {
+    console.log("Ajout d’un élément");
+  };
+
+  const handleEdit = async () => {
+    if (isEditing) {
+      try {
+        for (const stock of stocks) {
+          // await updateStocks(stock.ID_stock, {
+          //   Nmb_on_shelves: stock.Nmb_on_shelves,
+          //   Nmb_boxes: stock.Nmb_boxes,
+          //   Quantity: stock.Quantity,
+          // });
+        }
+      } catch (error) {
+        console.error("Erreur lors de la mise à jour des stocks", error);
+      }
+    }
+    setIsEditing(!isEditing);
+  };
 
   return (
     <div className="flex flex-col gap-[3vh] items-center justify-center relative z-10 text-white w-[100%] h-[100%] p-5">
       <div className="w-[100%]">
         <BackButton path="/" />
       </div>
+      <FloatingButtonStock onAdd={handleAdd} onEdit={handleEdit} isEditing={isEditing} />
 
       {/* 🏷 Catégories */}
-      <div className="flex items-center justify-start gap-3 w-[100%] px-4 overflow-x-auto scrollbar-hide">
+      <div className="flex items-center justify-start gap-3 w-[100%] px-4 overflow-x-auto h-[10vh] scrollbar-hide">
         {categories.map((category, index) => (
           <button
             key={category.ID_category}
             onClick={() => setSelectedCategory(category.ID_category)}
-            className={`p-4 text-xl rounded-[20px] border-b-[5px] transition-all bg-white ${
+            className={`p-4 text-xl rounded-[20px] border-b-[5px] cursor-pointer transition-all bg-white ${
               selectedCategory === category.ID_category
                 ? "!border-red-500 text-red-500 "
                 : "border-gray-300 C-text-black "
@@ -101,14 +125,14 @@ export default function HomePage() {
       </div>
 
       {/* 🎯 Filtres */}
-      <div className="flex items-center justify-around w-full">
-        <div className="flex items-center justify-start w-[60%] gap-2">
+      <div className="flex items-center justify-around sm:justify-end sm:gap-8 w-full">
+        <div className="flex items-center justify-start w-[60%] sm:w-auto gap-2">
           {/* 📌 Filtre par nom */}
           <button
             onClick={() =>
               setSortByName((prev) => (prev === 1 ? -1 : prev === -1 ? 0 : 1))
             }
-            className="flex items-center gap-2  text-black px-3 py-2"
+            className="flex items-center gap-2 cursor-pointer text-black px-3 py-2"
           >
             {sortByName === 1 ? (
               <i className="fas fa-sort-up" aria-hidden="true"></i>
@@ -125,7 +149,7 @@ export default function HomePage() {
             onClick={() =>
               setSortByQuantity((prev) => (prev === 1 ? -1 : prev === -1 ? 0 : 1))
             }
-            className="flex items-center gap-2 text-black px-3 py-2"
+            className="flex items-center gap-2 cursor-pointer text-black px-3 py-2"
           >
             {sortByQuantity === 1 ? (
               <i className="fas fa-sort-up" aria-hidden="true"></i>
@@ -139,7 +163,7 @@ export default function HomePage() {
         </div>
 
         {/* 🔍 Recherche par code-barre */}
-        <div className="relative w-[40%] flex items-center ">
+        <div className="relative w-[40%] sm:w-[20%] flex items-center ">
           <input
             type="text"
             placeholder="Recherche"
@@ -159,91 +183,10 @@ export default function HomePage() {
         {filteredStocks.length === 0 ? (
           <p className="text-white text-center">Aucun produit trouvé.</p>
         ) : (
-          filteredStocks.map((stock) => (
-            <div
-              key={stock.ID_stock}
-              className="bg-white w-[90%] rounded-[10px] shadow-md border-[2px] C-border-red mb-2 overflow-hidden transition-all duration-300"
-            >
-              {/* Partie cliquable */}
-              <div
-                className="flex cursor-pointer h-[5vh]"
-                onClick={() => toggleExpand(stock.ID_stock)}
-              >
-                {/* 📸 Image produit */}
-                <div className="flex items-center h-full gap-3 border-r-black border-r-[1px] w-[15%]">
-                  <img
-                    src={
-                      !stock.product.Image ||
-                      "images/elements/default-product.jpg"
-                    }
-                    alt={stock.product?.Label}
-                    className="w-auto h-full rounded-[10px] object-cover"
-                  />
-                </div>
-                {/* Infos produit */}
-                <div className="flex justify-between items-center w-[85%] h-full py-3 px-2 pr-4">
-                  <div className="w-[60%]">
-                    <p className="C-text-black font-semibold text-xl">
-                      {stock.product?.Label}
-                    </p>
-                    <p className="C-text-black font-normal text-sm">
-                      {stock.product?.Barcode}
-                    </p>
-                  </div>
-                  <div className="flex items-center gap-3 text-lg justify-between w-[40%]">
-                    <div className="flex items-center gap-1">
-                      <i className="fa-solid fa-boxes-stacked C-text-red text-2xl"></i>
-                      <p className="C-text-black font-bold">
-                        {stock.product.Box_quantity}
-                      </p>
-                    </div>
-                    <div className="flex items-center gap-1">
-                      <i className="fa-solid fa-dolly C-text-red text-2xl"></i>
-                      <p className="C-text-black font-bold">
-                        {stock.Quantity}
-                      
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Partie étendue */}
-              <div
-                className={`transition-all duration-500 ease-in-out ${
-                  expandedStockId === stock.ID_stock
-                    ? "max-h-[200px] opacity-100"
-                    : "max-h-0 opacity-0"
-                } overflow-hidden C-border-red-var2 border-t-[1px]`}
-              >
-                <div className="flex justify-around items-center px-6 py-3 border-t C-border-light">
-                {stock.product.Packing === 0 ?
-                  <div className="flex items-center gap-2">
-                    <i className="fa-solid fa-cash-register text-2xl C-text-red"></i>
-                    <span className="text-black font-bold">
-                      {stock.Nmb_on_shelves}
-                    </span>
-                  </div>
-                  : ''}
-                  <div className="flex items-center gap-2">
-                    <i className="fa-solid fa-box-open text-2xl C-text-red"></i>
-                    <span className="text-black font-bold">
-                      {stock.Nmb_boxes} {stock.product.Packing === 0 ? stock.Nmb_boxes * stock.product.Box_quantity == stock.Quantity ? '' : '(1)' : ''}
-                    </span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <i className="fa-solid fa-box text-2xl C-text-red"></i>
-                    <input
-                      type="checkbox"
-                      className="w-5 h-5"
-                      disabled
-                      checked={stock.product.Packing === 1 ? true : false}
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
-          ))
+          isMobile
+            ? <StockListMobile stocks={filteredStocks} isEditing={isEditing} setStocks={setStocks} />
+            : <StockListDesktop stocks={filteredStocks} isEditing={isEditing} setStocks={setStocks} />
+          
         )}
       </div>
     </div>
