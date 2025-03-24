@@ -9,6 +9,7 @@ import { useMediaQuery } from "@/hooks/useMediaQuery";
 import StockListDesktop from "@/components/StockListDesktop";
 import StockListMobile from "@/components/StockListMobile";
 import FloatingButtonStock from "@/components/FloatingButtonStock";
+import { putStocks } from "@/services/stock";
 
 export default function HomePage() {
   const [stocks, setStocks] = useState([]);
@@ -85,13 +86,7 @@ export default function HomePage() {
   const handleEdit = async () => {
     if (isEditing) {
       try {
-        for (const stock of stocks) {
-          // await updateStocks(stock.ID_stock, {
-          //   Nmb_on_shelves: stock.Nmb_on_shelves,
-          //   Nmb_boxes: stock.Nmb_boxes,
-          //   Quantity: stock.Quantity,
-          // });
-        }
+        await putStocks(user.ID_store, stocks);
       } catch (error) {
         console.error("Erreur lors de la mise à jour des stocks", error);
       }

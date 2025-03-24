@@ -29,10 +29,10 @@ export default function StockListMobile({ stocks, isEditing, setStocks }) {
             className="flex cursor-pointer h-[5vh]"
             onClick={() => toggle(stock.ID_stock)}
           >
-            <div className="flex items-center h-full gap-3 border-r-black border-r-[1px] w-[15%]">
+            <div className="flex items-center justify-center h-full gap-3 border-r-black border-r-[1px] w-[15%]">
               <img
                 src={
-                  stock.product.Image || "/images/elements/default-product.jpg"
+                  !stock.product.Image || "/images/elements/default-product.jpg"
                 }
                 alt={stock.product?.Label}
                 className="w-auto h-full rounded-[10px] object-cover"
@@ -54,10 +54,19 @@ export default function StockListMobile({ stocks, isEditing, setStocks }) {
                     {stock.product.Box_quantity}
                   </p>
                 </div>
-                <div className="flex items-center gap-1 ">
-                  <i className="fa-solid fa-dolly C-text-red text-2xl" aria-hidden="true"></i>
-                  <p className="C-text-black font-bold ">{stock.Quantity}</p>
-                </div>
+                <div className="flex items-center gap-1">
+                <i className="fa-solid fa-dolly text-2xl C-text-red" aria-hidden="true"></i>
+                {isEditing ? (
+                  <input
+                    type="number"
+                    value={stock.Quantity}
+                    onChange={(e) => handleChange(stock.ID_stock, "Quantity", e.target.value)}
+                    className="w-[50px] text-center border border-gray-300 rounded C-text-black font-bold"
+                  />
+                ) : (
+                  <span className="C-text-black font-bold">{stock.Quantity}</span>
+                )}
+              </div>
               </div>
             </div>
           </div>
@@ -104,19 +113,7 @@ export default function StockListMobile({ stocks, isEditing, setStocks }) {
                   </span>
                 )}
               </div>
-              <div className="flex items-center gap-2">
-                <i className="fa-solid fa-dolly text-2xl C-text-red" aria-hidden="true"></i>
-                {isEditing ? (
-                  <input
-                    type="number"
-                    value={stock.Quantity}
-                    onChange={(e) => handleChange(stock.ID_stock, "Quantity", e.target.value)}
-                    className="w-[50px] text-center border border-gray-300 rounded C-text-black font-bold"
-                  />
-                ) : (
-                  <span className="C-text-black font-bold">{stock.Quantity}</span>
-                )}
-              </div>
+              
               <div className="flex items-center gap-2">
                 <i className="fa-solid fa-box text-2xl C-text-red" aria-hidden="true"></i>
                 <input

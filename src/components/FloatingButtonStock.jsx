@@ -6,6 +6,11 @@ export default function FloatingButtonStock({ onAdd, onEdit, isEditing }) {
   const [isOpen, setIsOpen] = useState(false);
   const toggleMenu = () => setIsOpen((prev) => !prev);
 
+  const onAddHandeler = () => {
+    setIsOpen(false);
+    onAdd();
+  };
+
   return (
     <div className="fixed bottom-6 right-6 z-50 flex flex-col items-center gap-3">
       {/* Menu contextuel animé */}
@@ -28,7 +33,7 @@ export default function FloatingButtonStock({ onAdd, onEdit, isEditing }) {
 
             <motion.button
               whileTap={{ scale: 0.9 }}
-              onClick={onAdd}
+              onClick={onAddHandeler}
               className="w-12 h-12 rounded-full C-bg-red C-text-white flex items-center justify-center shadow-lg"
             >
               <i className="fas fa-plus" aria-hidden="true"/>

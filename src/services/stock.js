@@ -11,3 +11,18 @@ export async function getStocks(ID_store) {
         return null;
     }
 }
+
+export async function putStocks(ID_store, stocks) {
+    try {
+        const res = await fetchData(`/stocks/${ID_store}`, {
+            method: "PUT",
+            body: JSON.stringify({
+                stocks: stocks,
+            }),
+        });
+    
+        return await res;
+    } catch (error) {
+        return null;
+    }
+}
