@@ -10,6 +10,8 @@ import StockListDesktop from "@/components/StockListDesktop";
 import StockListMobile from "@/components/StockListMobile";
 import FloatingButtonStock from "@/components/FloatingButtonStock";
 import { putStocks } from "@/services/stock";
+import AddStockModal from "@/components/AddStockModal";
+
 
 export default function HomePage() {
   const [stocks, setStocks] = useState([]);
@@ -19,6 +21,7 @@ export default function HomePage() {
   const [sortByName, setSortByName] = useState(0);
   const [sortByQuantity, setSortByQuantity] = useState(0);
   const [searchTerm, setSearchTerm] = useState("");
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const isMobile = useMediaQuery("(max-width: 768px)");
 
@@ -80,8 +83,13 @@ export default function HomePage() {
   const colors = ["#FF6384", "#36A2EB", "#FFCE56", "#4CAF50", "#9C27B0"];
   
   const handleAdd = () => {
-    console.log("Ajout d’un élément");
+    setIsModalOpen(true);
   };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+  
 
   const handleEdit = async () => {
     if (isEditing) {
@@ -184,6 +192,10 @@ export default function HomePage() {
           
         )}
       </div>
+      {isModalOpen && (
+        <AddStockModal onClose={closeModal} storeId={user?.ID_store} setStocks={setStocks} />
+      )}
+
     </div>
   );
 }
