@@ -1,13 +1,8 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import SelectProduct from "./SelectProduct";
-import NewProductForm from "./NewProductForm";
 import Image from "next/image";
 
 export default function AddStockModal({ products, onClose, onSubmit, createProduct }) {
-  const [selectedProduct, setSelectedProduct] = useState(null);
-  const [showNewProductForm, setShowNewProductForm] = useState(false);
-  const [boxCount, setBoxCount] = useState(0);
   const [pendingProducts, setPendingProducts] = useState([]);
 
   const handleFinish = () => {
@@ -22,10 +17,12 @@ export default function AddStockModal({ products, onClose, onSubmit, createProdu
         <h2 className="text-center text-lg font-bold mb-2">Ajout au stock</h2>
         {!showNewProductForm ? (
           <>
-            
+            {/* Liste des produits rangé par catégories (comme view des listes) avec barre de recherche */}
           </>
         ) : (
-          <></>
+          <>
+            {/* Formulaire de création d'un produit */}
+          </>
         )}
 
         <div className="mt-4">
