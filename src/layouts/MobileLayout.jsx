@@ -4,7 +4,7 @@ import { useAuth } from "@/context/AuthProvider";
 import "@/styles/globals.css";
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Modal, ModalContent } from "@heroui/react"; // ✅ Vérification des bons imports
+import { Modal, ModalContent } from "@heroui/react";
 
 export default function MobileLayout({ children, title, city }) {
   const { user, logout } = useAuth();

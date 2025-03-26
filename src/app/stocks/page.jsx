@@ -11,7 +11,8 @@ import StockListMobile from "@/components/StockListMobile";
 import FloatingButtonStock from "@/components/FloatingButtonStock";
 import { putStocks } from "@/services/stock";
 import AddStockModal from "@/components/AddStockModal";
-
+import { motion, AnimatePresence } from "framer-motion";
+import { Modal, ModalContent } from "@heroui/react";
 
 export default function HomePage() {
   const [stocks, setStocks] = useState([]);
@@ -21,7 +22,10 @@ export default function HomePage() {
   const [sortByName, setSortByName] = useState(0);
   const [sortByQuantity, setSortByQuantity] = useState(0);
   const [searchTerm, setSearchTerm] = useState("");
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
+
+  const openModal = () => setIsOpen(true);
+  const closeModal = () => setIsOpen(false);
 
   const isMobile = useMediaQuery("(max-width: 768px)");
 
@@ -83,13 +87,8 @@ export default function HomePage() {
   const colors = ["#FF6384", "#36A2EB", "#FFCE56", "#4CAF50", "#9C27B0"];
   
   const handleAdd = () => {
-    setIsModalOpen(true);
+    openModal(true);
   };
-
-  const closeModal = () => {
-    setIsModalOpen(false);
-  };
-  
 
   const handleEdit = async () => {
     if (isEditing) {
@@ -192,9 +191,33 @@ export default function HomePage() {
           
         )}
       </div>
-      {isModalOpen && (
-        <AddStockModal onClose={closeModal} storeId={user?.ID_store} setStocks={setStocks} />
-      )}
+      <AnimatePresence>
+        {isOpen && (
+          <Modal
+            isOpen={isOpen}
+            onClose={closeModal}
+            hideCloseButton={true}
+            backdrop="opaque"
+          >
+            <ModalContent
+              as={motion.div}
+              className="bg-white fixed rounded-t-[40px] bottom-0 left-0 w-full h-[80vh] shadow-lg pt-[5vh] overflow-hidden"
+              initial={{ y: "100%" }}
+              animate={{ y: 0 }}
+              exit={{ y: "100%" }}
+              transition={{ duration: 0.3, ease: "easeOut" }}
+            >
+              <AddStockModal
+                products={stocks}
+                onClose={closeModal}
+                onSubmit={(data) => {
+                  setStocks([...stocks, ...data]);
+                }}
+              />
+            </ModalContent>
+          </Modal>
+        )}
+      </AnimatePresence>
 
     </div>
   );
