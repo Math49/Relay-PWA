@@ -11,7 +11,7 @@ export async function login(name, password) {
         body: JSON.stringify({ Name: name, Password: password }),
       });
 
-      //setAuthToken(res.token);
+      setAuthToken(res.token);
 
       return await res;
     } catch (error) {
@@ -23,6 +23,7 @@ export async function login(name, password) {
 // ✅ Sauvegarde le token dans les cookies
 export function setAuthToken(token) {
   Cookies.set(TOKEN_KEY, token, { expires: 1, sameSite: "Strict" });
+  Cookies.set("pendingProducts", []);
 }
 
 // ✅ Récupère le token depuis les cookies
