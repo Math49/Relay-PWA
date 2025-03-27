@@ -201,12 +201,15 @@ export default function HomePage() {
           >
             <ModalContent
               as={motion.div}
-              className="bg-white fixed rounded-t-[40px] bottom-0 left-0 w-full h-[80vh] shadow-lg pt-[5vh] overflow-hidden"
+              className="bg-white fixed rounded-t-[40px] bottom-0 left-0 w-full h-[90vh] border-t-[2px] C-border-red-var2 pt-[2vh] overflow-hidden"
               initial={{ y: "100%" }}
               animate={{ y: 0 }}
               exit={{ y: "100%" }}
               transition={{ duration: 0.3, ease: "easeOut" }}
             >
+              <div className="p-4 cursor-pointer absolute " onClick={closeModal}>
+                <i className="fa-solid fa-arrow-left-long text-3xl C-text-black" aria-hidden="true"></i>
+              </div>
               <AddStockModal
                 products={stocks}
                 onClose={closeModal}
