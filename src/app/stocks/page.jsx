@@ -1,7 +1,7 @@
 "use client";
 import BackButton from "@/components/BackButton";
 import React, { useState, useEffect } from "react";
-import { getStocks } from "@/services/stock";
+import { getStocks, addStock } from "@/services/stock";
 import { getCategories } from "@/services/category";
 import { useAuth } from "@/context/AuthProvider";
 import Separateur from "@/components/Separateur";
@@ -85,7 +85,7 @@ export default function HomePage() {
     setFilteredStocks(filtered);
   };
   const colors = ["#FF6384", "#36A2EB", "#FFCE56", "#4CAF50", "#9C27B0"];
-  
+
   const handleAdd = () => {
     openModal(true);
   };
@@ -106,7 +106,11 @@ export default function HomePage() {
       <div className="w-[100%]">
         <BackButton path="/" />
       </div>
-      <FloatingButtonStock onAdd={handleAdd} onEdit={handleEdit} isEditing={isEditing} />
+      <FloatingButtonStock
+        onAdd={handleAdd}
+        onEdit={handleEdit}
+        isEditing={isEditing}
+      />
 
       {/* 🏷 Catégories */}
       <div className="flex items-center justify-start gap-3 w-[100%] px-4 overflow-x-auto h-[10vh] scrollbar-hide">
@@ -149,7 +153,9 @@ export default function HomePage() {
           {/* 📌 Filtre par quantité */}
           <button
             onClick={() =>
-              setSortByQuantity((prev) => (prev === 1 ? -1 : prev === -1 ? 0 : 1))
+              setSortByQuantity((prev) =>
+                prev === 1 ? -1 : prev === -1 ? 0 : 1
+              )
             }
             className="flex items-center gap-2 cursor-pointer text-black px-3 py-2"
           >
@@ -184,11 +190,18 @@ export default function HomePage() {
       <div className="w-full h-full flex flex-col items-center mt-2">
         {filteredStocks.length === 0 ? (
           <p className="text-white text-center">Aucun produit trouvé.</p>
+        ) : isMobile ? (
+          <StockListMobile
+            stocks={filteredStocks}
+            isEditing={isEditing}
+            setStocks={setStocks}
+          />
         ) : (
-          isMobile
-            ? <StockListMobile stocks={filteredStocks} isEditing={isEditing} setStocks={setStocks} />
-            : <StockListDesktop stocks={filteredStocks} isEditing={isEditing} setStocks={setStocks} />
-          
+          <StockListDesktop
+            stocks={filteredStocks}
+            isEditing={isEditing}
+            setStocks={setStocks}
+          />
         )}
       </div>
       <AnimatePresence>
@@ -207,21 +220,30 @@ export default function HomePage() {
               exit={{ y: "100%" }}
               transition={{ duration: 0.3, ease: "easeOut" }}
             >
-              <div className="p-4 cursor-pointer absolute " onClick={closeModal}>
-                <i className="fa-solid fa-arrow-left-long text-3xl C-text-black" aria-hidden="true"></i>
+              <div
+                className="p-4 cursor-pointer absolute "
+                onClick={closeModal}
+              >
+                <i
+                  className="fa-solid fa-arrow-left-long text-3xl C-text-black"
+                  aria-hidden="true"
+                ></i>
               </div>
               <AddStockModal
                 products={stocks}
                 onClose={closeModal}
-                onSubmit={(data) => {
-                  setStocks([...stocks, ...data]);
+                onSubmit={async (newStock) => {
+                  const res = await addStock(user.ID_store, newStock);
+                  if (res) {
+                    setStocks(res);
+                    closeModal();
+                  }
                 }}
               />
             </ModalContent>
           </Modal>
         )}
       </AnimatePresence>
-
     </div>
   );
 }

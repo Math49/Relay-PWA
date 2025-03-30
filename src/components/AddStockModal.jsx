@@ -58,6 +58,7 @@ export default function AddStockModal({ onClose, onSubmit, createProduct }) {
     setQuantity(0);
   };
   
+  console.log("Produits en attente :", pendingProducts);
 
   const handleFinish = () => {
     onSubmit(pendingProducts);
@@ -267,6 +268,7 @@ export default function AddStockModal({ onClose, onSubmit, createProduct }) {
               <button
                 className=" C-text-white font-bold text-xl cursor-pointer C-bg-red rounded-full px-10 py-2"
                 onClick={handleAddProduct}
+                disabled={!selectedProduct || Quantity <= 0}
               >
                 Ajouter
               </button>
@@ -279,21 +281,23 @@ export default function AddStockModal({ onClose, onSubmit, createProduct }) {
       <div className="flex justify-center w-[90%]">
         <Separateur />
       </div>
-      <div className=" overflow-y-scroll flex flex-col items-center w-full px-5 h-[40%]">
+      <div className=" overflow-y-scroll w-full px-5 h-[40%] ">
+        <div className="flex flex-col items-center w-full ">
+
         {pendingProducts.map((p) => (
           <div
             key={p.ID_product}
-            className="bg-white w-[90%] rounded-[10px] border-[2px] C-border-red mb-2 overflow-hidden transition-all duration-300"
+            className="bg-white w-[90%] rounded-[10px] border-[2px] C-border-red mb-2 overflow-hidden transition-all duration-300 min-h-[5vh]"
           >
-            <div className="flex h-[5vh]">
-              <div className="flex items-center justify-center h-full gap-3 border-r-black border-r-[1px] w-[15%]">
+            <div className="flex items-center">
+              <div className="flex items-center justify-center h-full gap-3 w-[15%]">
                 <img
                   src={!p.Image || "/images/elements/default-product.jpg"}
                   alt={p?.Label}
                   className="w-auto h-full rounded-[10px] object-cover"
                 />
               </div>
-              <div className="flex justify-between items-center w-[85%] h-full py-3 px-2 pr-4">
+              <div className="flex justify-between border-black border-l-[1px]  items-center w-[85%] h-full py-3 px-2 pr-4">
                 <div className="w-[40%]">
                   <p className="C-text-black font-semibold text-xl">
                     {p?.Label}
@@ -336,12 +340,13 @@ export default function AddStockModal({ onClose, onSubmit, createProduct }) {
         ))}
         {pendingProducts.length > 0 && (
           <button
-            className="w-full mt-4 py-2 bg-green-600 text-white font-bold rounded"
+            className="w-full mt-4 py-2 C-bg-red-var2 C-text-red font-bold rounded-full text-xl cursor-pointer"
             onClick={handleFinish}
           >
             Terminé
           </button>
         )}
+        </div>
       </div>
     </div>
   );
