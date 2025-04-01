@@ -1,6 +1,5 @@
 "use client";
 import React, { useState } from "react";
-import { Checkbox } from "@heroui/checkbox";
 
 export default function StockCreateListMobile({ stocks, setStocks }) {
   const [expanded, setExpanded] = useState(null);

@@ -58,7 +58,7 @@ export default function MessageCarouselDesktop({ storeId }) {
                   key={index}
                   className="C-bg-red text-white flex flex-col items-center p-5 rounded-[20px] w-[30%] relative"
                 >
-                  <div className="absolute rounded-[30px] C-bg-red-var2 w-[90%] h-[10vh] bottom-[-1vh] z-[-1]"></div>
+                  <div className="absolute rounded-[30px] C-bg-red-var2 w-[90%] h-[5vh] bottom-[-1vh] z-[-1]"></div>
 
                   <p className="text-lg">{message.Message}</p>
                 </div>
