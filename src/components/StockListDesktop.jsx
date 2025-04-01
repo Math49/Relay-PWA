@@ -130,7 +130,7 @@ export default function StockListDesktop({ stocks, isEditing, setStocks }) {
                         className="w-[50px] text-center border border-gray-300 rounded C-text-black font-bold"
                       />
                     ) : (
-                      <p className="C-C-text-black font-bold">
+                      <p className="C-text-black font-bold">
                         {stock.Quantity}
                       </p>
                     )}
