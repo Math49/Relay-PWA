@@ -23,6 +23,10 @@ export default function RootLayout({ children }) {
     case "/stocks":
       title = "Stocks";
       break;
+    
+    case "/listes":
+      title = "Listes";
+      break;
   
     default:
       break;

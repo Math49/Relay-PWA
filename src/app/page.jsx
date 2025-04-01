@@ -90,7 +90,7 @@ export default function HomePage() {
               />
             </Link>
             <Link
-              href="/stocks"
+              href="/listes"
               className="flex items-center justify-around w-[100%] h-[12vh] C-bg-red-var2 rounded-[20px] p-4 overflow-hidden relative"
             >
               <i className="fa-solid fa-clipboard-list C-text-red-var1 text-5xl" aria-hidden="true"></i>
@@ -104,7 +104,7 @@ export default function HomePage() {
               />
             </Link>
             <Link
-              href="/stocks"
+              href="/config"
               className="flex items-center justify-around w-[100%] h-[12vh] C-bg-red-var2 rounded-[20px] p-4 overflow-hidden relative"
             >
               <i className="fa-solid fa-gears C-text-red-var1 text-5xl" aria-hidden="true"></i>
@@ -118,7 +118,7 @@ export default function HomePage() {
               />
             </Link>
             <Link
-              href="/stocks"
+              href="/about"
               className="flex items-center justify-around w-[100%] h-[12vh] C-bg-red-var2 rounded-[20px] p-4 overflow-hidden relative"
             >
               <i className="fa-solid fa-store C-text-red-var1 text-5xl" aria-hidden="true"></i>
