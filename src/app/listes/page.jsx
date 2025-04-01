@@ -3,6 +3,8 @@ import BackButton from "@/components/BackButton";
 import React, { useState, useEffect } from "react";
 import { useAuth } from "@/context/AuthProvider";
 import { getListes } from "@/services/listes";
+import Footer from "@/components/Footer";
+import Link from "next/link";
 
 export default function HomePage() {
   const { user } = useAuth();
@@ -36,16 +38,17 @@ export default function HomePage() {
       </div>
       <div className="w-full">
         <div className="w-full flex items-center justify-end px-5 py-3">
-        <button
+        <Link
+            href="/listes/create"
               className=" C-text-white font-bold text-xl cursor-pointer C-bg-red rounded-full px-10 py-2"
             >
               Créer une liste
-            </button>
+            </Link>
         </div>
         <div className="flex flex-col sm:flex-row items-center sm:flex-wrap gap-4 justify-start p-5 w-full">
           {/* Listes */}
           {listes.map((liste, index) => (
-            <div
+            <div key={liste.ID_list}
             className="flex items-center sm:flex-col cursor-pointer sm:justify-center justify-between w-[100%] sm:w-[24%] sm:h-[24vh] h-[12vh] C-bg-red-var2 rounded-[20px] px-6 py-3 overflow-hidden relative"
           >
             <p className="C-text-black font-bold text-2xl">Liste N°{index+1}</p>
@@ -60,6 +63,8 @@ export default function HomePage() {
           ))}
         </div>
       </div>
+            <Footer />
+      
     </div>
   );
 }

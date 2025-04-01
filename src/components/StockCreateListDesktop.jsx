@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 
-export default function StockListDesktop({ stocks, isEditing, setStocks }) {
+export default function StockCreateListDesktop({ stocks, setStocks }) {
   const handleChange = (id, field, value) => {
     setStocks((prevStocks) =>
       prevStocks.map((stock) =>
@@ -36,7 +36,8 @@ export default function StockListDesktop({ stocks, isEditing, setStocks }) {
               <div className="flex items-center justify-center h-full gap-3 border-r-black border-r-[1px] w-[10%]">
                 <img
                   src={
-                    stock.product.Image || "/images/elements/default-product.jpg"
+                    stock.product.Image ||
+                    "/images/elements/default-product.jpg"
                   }
                   alt={stock.product?.Label}
                   className="w-auto h-full rounded-[10px] object-cover"
@@ -54,7 +55,10 @@ export default function StockListDesktop({ stocks, isEditing, setStocks }) {
                 <div className="flex items-center gap-3 text-lg justify-between w-[70%]">
                   {/* Box_quantity (non modifiable) */}
                   <div className="flex items-center gap-1">
-                    <i className="fa-solid fa-boxes-stacked C-text-red text-2xl" aria-hidden="true"></i>
+                    <i
+                      className="fa-solid fa-boxes-stacked C-text-red text-2xl"
+                      aria-hidden="true"
+                    ></i>
                     <p className="C-text-black font-bold ">
                       {stock.product.Box_quantity}
                     </p>
@@ -62,26 +66,14 @@ export default function StockListDesktop({ stocks, isEditing, setStocks }) {
 
                   {/* Nmb_on_shelves */}
                   <div className="flex items-center gap-2">
-                    <i className="fa-solid fa-cash-register text-2xl C-text-red" aria-hidden="true"></i>
+                    <i
+                      className="fa-solid fa-cash-register text-2xl C-text-red"
+                      aria-hidden="true"
+                    ></i>
                     {stock.product.Packing === 0 ? (
-                      isEditing ? (
-                        <input
-                          type="number"
-                          value={stock.Nmb_on_shelves}
-                          onChange={(e) =>
-                            handleChange(
-                              stock.ID_stock,
-                              "Nmb_on_shelves",
-                              e.target.value
-                            )
-                          }
-                          className="w-[50px] text-center border border-gray-300 rounded C-text-black font-bold"
-                        />
-                      ) : (
-                        <span className="C-text-black font-bold">
-                          {stock.Nmb_on_shelves}
-                        </span>
-                      )
+                      <span className="C-text-black font-bold">
+                        {stock.Nmb_on_shelves}
+                      </span>
                     ) : (
                       <span className="text-gray-400">-</span>
                     )}
@@ -89,56 +81,35 @@ export default function StockListDesktop({ stocks, isEditing, setStocks }) {
 
                   {/* Nmb_boxes */}
                   <div className="flex items-center gap-2">
-                    <i className="fa-solid fa-box text-2xl C-text-red" aria-hidden="true"></i>
-                    {isEditing ? (
-                      <input
-                        type="number"
-                        value={stock.Nmb_boxes}
-                        onChange={(e) =>
-                          handleChange(
-                            stock.ID_stock,
-                            "Nmb_boxes",
-                            e.target.value
-                          )
-                        }
-                        className="w-[50px] text-center border border-gray-300 rounded C-text-black font-bold"
-                      />
-                    ) : (
-                      <span className="C-text-black font-bold">
-                        {stock.Nmb_boxes}
-                        {stock.product.Packing === 0 &&
-                          stock.Nmb_boxes * stock.product.Box_quantity !==
-                            stock.Quantity && <span className="ml-1">(1)</span>}
-                      </span>
-                    )}
+                    <i
+                      className="fa-solid fa-box text-2xl C-text-red"
+                      aria-hidden="true"
+                    ></i>
+
+                    <span className="C-text-black font-bold">
+                      {stock.Nmb_boxes}
+                      {stock.product.Packing === 0 &&
+                        stock.Nmb_boxes * stock.product.Box_quantity !==
+                          stock.Quantity && <span className="ml-1">(1)</span>}
+                    </span>
                   </div>
 
                   {/* Quantity */}
                   <div className="flex items-center gap-1">
-                    <i className="fa-solid fa-dolly C-text-red text-2xl" aria-hidden="true"></i>
-                    {isEditing ? (
-                      <input
-                        type="number"
-                        value={stock.Quantity}
-                        onChange={(e) =>
-                          handleChange(
-                            stock.ID_stock,
-                            "Quantity",
-                            e.target.value
-                          )
-                        }
-                        className="w-[50px] text-center border border-gray-300 rounded C-text-black font-bold"
-                      />
-                    ) : (
-                      <p className="C-text-black font-bold">
-                        {stock.Quantity}
-                      </p>
-                    )}
+                    <i
+                      className="fa-solid fa-dolly C-text-red text-2xl"
+                      aria-hidden="true"
+                    ></i>
+
+                    <p className="C-text-black font-bold">{stock.Quantity}</p>
                   </div>
 
                   {/* Packing (readonly) */}
                   <div className="flex items-center gap-2">
-                    <i className="fa-solid fa-box-open text-2xl C-text-red" aria-hidden="true"></i>
+                    <i
+                      className="fa-solid fa-box-open text-2xl C-text-red"
+                      aria-hidden="true"
+                    ></i>
                     <input
                       type="checkbox"
                       className="w-5 h-5"

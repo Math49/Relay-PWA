@@ -95,7 +95,7 @@ export default function StockListMobile({ stocks, isEditing, setStocks }) {
                 </div>
               )}
               <div className="flex items-center gap-2">
-                <i className="fa-solid fa-box-open text-2xl C-text-red" aria-hidden="true"></i>
+                <i className="fa-solid fa-box text-2xl C-text-red" aria-hidden="true"></i>
                 {isEditing ? (
                   <input
                     type="number"
@@ -115,7 +115,7 @@ export default function StockListMobile({ stocks, isEditing, setStocks }) {
               </div>
               
               <div className="flex items-center gap-2">
-                <i className="fa-solid fa-box text-2xl C-text-red" aria-hidden="true"></i>
+                <i className="fa-solid fa-box-open text-2xl C-text-red" aria-hidden="true"></i>
                 <input
                   type="checkbox"
                   className="w-5 h-5"

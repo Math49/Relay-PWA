@@ -27,6 +27,10 @@ export default function RootLayout({ children }) {
     case "/listes":
       title = "Listes";
       break;
+
+    case "/listes/create":
+      title = "Créer une liste";
+      break;
   
     default:
       break;
