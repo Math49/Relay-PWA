@@ -6,8 +6,6 @@ export default function StockCreateListMobile({ stocks, setStocks }) {
 
   const toggle = (id) => setExpanded((prev) => (prev === id ? null : id));
 
-  const handleChange = (id, field, value) => {};
-
   const [checkedStates, setCheckedStates] = useState(
     Array(stocks.length).fill(false)
   );

@@ -2,13 +2,27 @@
 import NavMenu from "@/components/NavMenu";
 import { useAuth } from "@/context/AuthProvider";
 import "@/styles/globals.css";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Modal, ModalContent } from "@heroui/react";
+import { getStore } from "@/services/store";
 
-export default function MobileLayout({ children, title, city }) {
+export default function MobileLayout({ children, title }) {
   const { user, logout } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
+  const [city, setCity] = useState("");
+
+  useEffect(() => {
+    const fetchStore = async () => {
+      if (user && user.ID_store) {
+        const storeData = await getStore(user.ID_store);
+        setCity(storeData.Address);
+      }
+    };
+
+    fetchStore();
+  
+  }, [user]);
 
   const openModal = () => setIsOpen(true);
   const closeModal = () => setIsOpen(false);
@@ -43,7 +57,7 @@ export default function MobileLayout({ children, title, city }) {
               transition={{ duration: 0.3, ease: "easeOut" }}
             >
               <NavMenu />
-              <div className=" flex items-center justify-between px-[5vw] C-bg-red h-[10vh]">
+              <div className=" flex items-center justify-center gap-5 px-[5vw] C-bg-red h-[10vh]">
                 <img src="/images/elements/logo-relay.svg" />
                 <p className="C-text-white font-bold text-2xl">Relay {city}</p>
               </div>

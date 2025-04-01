@@ -1,15 +1,16 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
+
 
 export default function StockCreateListDesktop({ stocks, setStocks }) {
-  const handleChange = (id, field, value) => {
-    setStocks((prevStocks) =>
-      prevStocks.map((stock) =>
-        stock.ID_stock === id
-          ? { ...stock, [field]: parseInt(value) || 0 }
-          : stock
-      )
-    );
+  const [checkedStates, setCheckedStates] = useState(
+    Array(stocks.length).fill(false)
+  );
+
+  const toggleCheckbox = (index) => {
+    const updated = [...checkedStates];
+    updated[index] = !updated[index];
+    setCheckedStates(updated);
   };
 
   if (!stocks || stocks.length === 0) {
@@ -19,10 +20,10 @@ export default function StockCreateListDesktop({ stocks, setStocks }) {
   return (
     <div className="w-full flex flex-col items-center mt-2">
       <div className="w-[90%] flex flex-col items-center gap-2">
-        {stocks.map((stock) => (
+        {stocks.map((stock, index) => (
           <div
             key={stock.ID_stock}
-            className="bg-white w-[90%] flex rounded-[10px] border-[2px] C-border-red mb-2 overflow-hidden transition-all duration-300"
+            className="bg-white w-[90%] flex rounded-[10px] border-[2px] C-border-red mb-2  overflow-hidden transition-all duration-300"
           >
             <div className="w-[80%] flex flex-col gap-4">
               <div className="flex h-[5vh]">
@@ -107,7 +108,7 @@ export default function StockCreateListDesktop({ stocks, setStocks }) {
                 </div>
               </div>
             </div>
-            <div className="C-border-red-var2 border-l-[1px] w-[20%] h-full">
+            <div className="C-border-red-var2 border-l-[1px] p-4 w-[20%] min-w-max h-full">
               <div className="flex flex-col items-center justify-center gap-4">
                 <div className="flex items-center gap-2">
                   <i
@@ -156,7 +157,7 @@ export default function StockCreateListDesktop({ stocks, setStocks }) {
                         className="sr-only"
                       />
                       <div
-                        className={`w-[4vh] h-[4vh] rounded-xl border-2 flex items-center justify-center transition-all duration-200 ${
+                        className={`w-[3vh] h-[3vh] rounded-xl border-2 flex items-center justify-center transition-all duration-200 ${
                           checkedStates[index]
                             ? "C-bg-red C-border-red"
                             : "C-border-red"

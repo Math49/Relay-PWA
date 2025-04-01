@@ -8,10 +8,14 @@ import { usePathname } from "next/navigation";
 import { AuthProvider } from "@/context/AuthProvider";
 import { HeroUIProvider } from "@heroui/react";
 import React from "react";
+import { useAuth } from "@/context/AuthProvider";
 
 export default function RootLayout({ children }) {
   const isMobile = useMediaQuery("(max-width: 768px)");
   const pathname = usePathname();
+
+  
+
 
   let title = "";
 
