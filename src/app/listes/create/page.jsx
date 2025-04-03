@@ -1,14 +1,14 @@
 "use client";
 import BackButton from "@/components/BackButton";
 import React, { useState, useEffect } from "react";
-import { getStocks, addStock } from "@/services/stock";
+import { getStocks } from "@/services/stock";
 import { getCategories } from "@/services/category";
 import { useAuth } from "@/context/AuthProvider";
 import Separateur from "@/components/Separateur";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
 import StockCreateListDesktop from "@/components/StockCreateListDesktop";
 import StockCreateListMobile from "@/components/StockCreateListMobile";
-import { putStocks } from "@/services/stock";
+import {createList} from "@/services/listes";
 
 export default function HomePage() {
   const [stocks, setStocks] = useState([]);
@@ -19,9 +19,9 @@ export default function HomePage() {
   const [sortByQuantity, setSortByQuantity] = useState(0);
   const [searchTerm, setSearchTerm] = useState("");
 
-  const isMobile = useMediaQuery("(max-width: 768px)");
+  const [itemsList, setItemsList] = useState({});
 
-  const [isEditing, setIsEditing] = useState(false);
+  const isMobile = useMediaQuery("(max-width: 768px)");
 
   const { user } = useAuth();
 
@@ -78,27 +78,29 @@ export default function HomePage() {
   };
   const colors = ["#FF6384", "#36A2EB", "#FFCE56", "#4CAF50", "#9C27B0"];
 
-  const handleAdd = () => {
-    openModal(true);
-  };
+  const handleCreateList = async () => {
 
-  const handleEdit = async () => {
-    if (isEditing) {
-      try {
-        await putStocks(user.ID_store, stocks);
-      } catch (error) {
-        console.error("Erreur lors de la mise à jour des stocks", error);
-      }
+    const res = await createList(user.ID_store, itemsList);
+
+    if (res) {
+      window.location.href = "/listes";
     }
-    setIsEditing(!isEditing);
-  };
+  }
 
   return (
-    <div className="flex flex-col gap-[3vh] items-center justify-center relative z-10 text-white w-[100%] h-[100%] p-5">
+    <div className="flex flex-col gap-[3vh] items-center justify-start relative z-10 text-white w-[100%] h-[100%] p-5">
       <div className="w-[100%]">
         <BackButton path="/" />
       </div>
-      
+      <div className="w-full flex items-center justify-end px-5 py-3">
+        <div
+          className=" C-text-red font-bold text-xl cursor-pointer C-bg-red-var2 rounded-full px-10 py-2"
+          onClick={handleCreateList}
+        >
+          Créer
+        </div>
+      </div>
+
       {/* 🏷 Catégories */}
       <div className="flex items-center justify-start gap-3 w-[100%] px-4 overflow-x-auto h-[10vh] min-h-min scrollbar-hide">
         {categories.map((category, index) => (
@@ -174,20 +176,20 @@ export default function HomePage() {
       </div>
       <Separateur />
       {/* 📦 Produits en stock */}
-      <div className="w-full h-full flex flex-col items-center mt-2">
+      <div className="w-full h-full flex flex-col justify-start items-center mt-2">
         {filteredStocks.length === 0 ? (
           <p className="text-white text-center">Aucun produit trouvé.</p>
         ) : isMobile ? (
           <StockCreateListMobile
             stocks={filteredStocks}
-            isEditing={isEditing}
-            setStocks={setStocks}
+            list={itemsList}
+            setList={setItemsList}
           />
         ) : (
           <StockCreateListDesktop
             stocks={filteredStocks}
-            isEditing={isEditing}
-            setStocks={setStocks}
+            list={itemsList}
+            setList={setItemsList}
           />
         )}
       </div>

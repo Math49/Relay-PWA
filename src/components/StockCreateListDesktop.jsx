@@ -1,11 +1,10 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
-export default function StockCreateListDesktop({ stocks }) {
+export default function StockCreateListDesktop({ stocks, list, setList }) {
   const [checkedStates, setCheckedStates] = useState(
     Array(stocks.length).fill(false)
   );
-  const [quantities, setQuantities] = useState({});
 
   const toggleCheckbox = (index, stock) => {
     const updated = [...checkedStates];
@@ -15,9 +14,9 @@ export default function StockCreateListDesktop({ stocks }) {
     // Si coché et pas assez pour une box complète → +1 item
     if (updated[index]) {
       const id = stock.ID_product;
-      const current = quantities[id]?.items || 0;
+      const current = list[id]?.items || 0;
       const toAdd = 1;
-      setQuantities((prev) => ({
+      setList((prev) => ({
         ...prev,
         [id]: {
           ...prev[id],
@@ -28,7 +27,7 @@ export default function StockCreateListDesktop({ stocks }) {
   };
 
   const updateQuantity = (id, type, amount) => {
-    setQuantities((prev) => {
+    setList((prev) => {
       const current = prev[id] || { boxes: 0, items: 0 };
       let { boxes, items } = current;
 
@@ -54,16 +53,14 @@ export default function StockCreateListDesktop({ stocks }) {
     return <p className="text-white text-center">Aucun produit trouvé.</p>;
   }
 
-  console.log(quantities);
-
   return (
     <div className="w-full flex flex-col items-center mt-2">
       <div className="w-[90%] flex flex-col items-center gap-2">
         {stocks.map((stock, index) => {
           const id = stock.ID_product;
           const boxQty = getBoxQty(id);
-          const boxCount = quantities[id]?.boxes || 0;
-          const itemCount = quantities[id]?.items || 0;
+          const boxCount = list[id]?.boxes || 0;
+          const itemCount = list[id]?.items || 0;
 
           return (
             <div
@@ -146,8 +143,10 @@ export default function StockCreateListDesktop({ stocks }) {
                       name="QuantityBoxes"
                       type="number"
                       className="text-center text-xl font-bold C-text-black border w-[5vh] h-[5vh] C-border-red rounded-xl"
-                      readOnly
                       value={boxCount}
+                      onChange={(e) =>
+                        updateQuantity(id, "boxes", e.target.value - boxCount)
+                      }
                     />
                     <button
                       className="C-bg-red w-[4vh] h-[4vh] text-white rounded-xl"
@@ -171,7 +170,9 @@ export default function StockCreateListDesktop({ stocks }) {
                         <input
                           name="QuantityItems"
                           type="number"
-                          readOnly
+                          onChange={(e) =>
+                            updateQuantity(id, "items", e.target.value - itemCount)
+                          }
                           className="text-center text-xl font-bold C-text-black border w-[5vh] h-[5vh] C-border-red rounded-xl"
                           value={itemCount}
                         />

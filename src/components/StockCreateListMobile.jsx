@@ -1,14 +1,13 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
-export default function StockCreateListMobile({ stocks, setStocks }) {
+export default function StockCreateListMobile({ stocks, list, setList }) {
   const [expanded, setExpanded] = useState(null);
   const toggle = (id) => setExpanded((prev) => (prev === id ? null : id));
 
   const [checkedStates, setCheckedStates] = useState(
     Array(stocks.length).fill(false)
   );
-  const [quantities, setQuantities] = useState({});
 
   const toggleCheckbox = (index, stock) => {
     const updated = [...checkedStates];
@@ -18,9 +17,9 @@ export default function StockCreateListMobile({ stocks, setStocks }) {
     // Si coché et pas assez pour une box complète → +1 item
     if (updated[index]) {
       const id = stock.ID_product;
-      const current = quantities[id]?.items || 0;
+      const current = list[id]?.items || 0;
       const toAdd = 1;
-      setQuantities((prev) => ({
+      setList((prev) => ({
         ...prev,
         [id]: {
           ...prev[id],
@@ -31,7 +30,7 @@ export default function StockCreateListMobile({ stocks, setStocks }) {
   };
 
   const updateQuantity = (id, type, amount) => {
-    setQuantities((prev) => {
+    setList((prev) => {
       const current = prev[id] || { boxes: 0, items: 0 };
       let { boxes, items } = current;
 
@@ -56,14 +55,13 @@ export default function StockCreateListMobile({ stocks, setStocks }) {
     return <p className="text-white text-center">Aucun produit trouvé.</p>;
   }
   
-  console.log(quantities);
   return (
-    <div className="w-full flex flex-col items-center mt-2">
+    <div className="w-full flex flex-col justify-start items-center mt-2">
       {stocks.map((stock, index) => {
         const id = stock.ID_product;
         const boxQty = getBoxQty(id);
-        const boxCount = quantities[id]?.boxes || 0;
-        const itemCount = quantities[id]?.items || 0;
+        const boxCount = list[id]?.boxes || 0;
+        const itemCount = list[id]?.items || 0;
 
         return (
           <div
@@ -166,7 +164,9 @@ export default function StockCreateListMobile({ stocks, setStocks }) {
                       type="number"
                       className="text-center text-xl font-bold C-text-black border w-[10vw] h-[10vw] C-border-red rounded-xl"
                       value={boxCount}
-                      readOnly
+                      onChange={(e) =>
+                        updateQuantity(id, "boxes", e.target.value - boxCount)
+                      }
                     />
                     <button
                       onClick={() => updateQuantity(id, "boxes", 1)}
@@ -190,7 +190,9 @@ export default function StockCreateListMobile({ stocks, setStocks }) {
                         type="number"
                         className="text-center text-xl font-bold C-text-black border w-[10vw] h-[10vw] C-border-red rounded-xl"
                         value={itemCount}
-                        readOnly
+                        onChange={(e) =>
+                          updateQuantity(id, "items", e.target.value - itemCount)
+                        }
                       />
                       <button
                         onClick={() => updateQuantity(id, "items", 1)}
