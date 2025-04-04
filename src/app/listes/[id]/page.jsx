@@ -8,11 +8,16 @@ import BackButton from "@/components/BackButton";
 import Separateur from "@/components/Separateur";
 
 export default function HomePage() {
+  const [isEditing, setIsEditing] = useState(false);
   const [liste, setListe] = useState(null);
   const [categories, setCategories] = useState([]);
+  const [checkedStates, setCheckedStates] = useState([]);
   const { user } = useAuth();
   const params = useParams();
   const id = params.id;
+
+
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -21,10 +26,18 @@ export default function HomePage() {
         const categoriesData = await getCategories(user.ID_store);
         setListe(listData);
         setCategories(categoriesData);
+        setCheckedStates(Array(listData.product_lists.length).fill(false));
       }
     };
     fetchData();
   }, [user]);
+
+  const toggleCheckbox = (productId) => {
+    setCheckedStates((prev) => ({
+      ...prev,
+      [productId]: !prev[productId],
+    }));
+  };
 
   const formatDate = (dateStr) => {
     const date = new Date(dateStr);
@@ -40,12 +53,12 @@ export default function HomePage() {
 
   return (
     <div className="flex flex-col gap-[3vh] items-center justify-start relative z-10 w-[100%] h-[100%] p-5">
-          <div className="w-[100%]">
-            <BackButton path="/listes" />
-          </div>
-        <h2 className="text-center text-xl font-bold mb-4">
-            {formatDate(liste.created_at)}
-        </h2>
+      <div className="w-[100%]">
+        <BackButton path="/listes" />
+      </div>
+      <h2 className="text-center text-xl font-bold mb-4">
+        {formatDate(liste.created_at)}
+      </h2>
 
       {categories.map((cat) => {
         const produits = liste.product_lists.filter(
@@ -57,17 +70,86 @@ export default function HomePage() {
         return (
           <div key={cat.ID_category} className="mb-6 w-full">
             <h3 className="text-xl mb-2">{cat.category?.Label}</h3>
-            <Separateur/>
-            <div className="pl-4 flex flex-col gap-2 justify-start items-center w-full">
-              {produits.map((p) => (
-                <div key={p.ID_product} className="mb-1 flex w-[80%] justify-between">
-                    <div className="w-[20%]">
-                        <input type="checkbox" name="" id="" />
+            <Separateur />
+            <div className="pl-4 flex flex-col gap-2 justify-start items-center w-full mt-3">
+              {produits.map((p, index) => (
+                <div
+                  key={p.ID_product}
+                  className="mb-1 flex w-[90%] gap-5 rounded justify-around items-center"
+                >
+                  <div className="w-[10%]">
+                    <label className="relative inline-flex items-center gap-3 cursor-pointer">
+                      <input
+                        type="checkbox"
+                        checked={checkedStates[p.ID_product] || false}
+                        onChange={() => toggleCheckbox(p.ID_product)}
+                        className="sr-only"
+                      />
+                      <div
+                        className={`w-[8vw] h-[8vw] rounded-xl border-2 flex items-center justify-center transition-all duration-200 ${
+                          checkedStates[p.ID_product]
+                            ? "C-bg-red C-border-red"
+                            : "C-border-red"
+                        }`}
+                      >
+                        {checkedStates[p.ID_product] && (
+                          <div className="w-3 h-3 rounded-full bg-white"></div>
+                        )}
+                      </div>
+                    </label>
+                  </div>
+                  <div className="w-[90%] flex justify-between items-center">
+                    <div
+                      className={`bg-white flex h-[7vh] w-full rounded-[10px] border-[2px] C-border-red mb-2 overflow-hidden transition-all duration-300 ${
+                        checkedStates[p.ID_product] ? "line-through opacity-60" : ""
+                      }`}
+                    >
+                      <div className="flex w-[60%]">
+                        <div className="flex items-center justify-center h-full gap-3 border-r-black border-r-[1px] w-[30%]">
+                          <img
+                            src={
+                              !p.product.Image ||
+                              "/images/elements/default-product.jpg"
+                            }
+                            alt={p.product?.Label}
+                            className="w-auto h-full rounded-[10px] object-cover"
+                          />
+                        </div>
+                        <div className="flex justify-between items-center w-[70%] h-full py-3 px-2 pr-4">
+                          <div className="w-[30%]">
+                            <p className="C-text-black font-semibold text-xl">
+                              {p.product?.Label}
+                            </p>
+                            <p className="C-text-black font-normal text-sm">
+                              {p.product?.Barcode}
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-3 text-lg pr-4 justify-between w-[40%]">
+                        <div className="flex items-center gap-1">
+                          <i className="fa-solid fa-box C-text-red text-2xl" />
+                          <p className="C-text-black font-bold ">
+                            {Math.floor(p.Quantity / p.product.Box_quantity)}
+                          </p>
+                        </div>
+                        <div className="flex items-center gap-1">
+                          <i className="fa-solid fa-dolly C-text-red text-2xl" />
+                          {p.product.Packing === 0 ? (
+                            <span className="C-text-black font-bold">
+                              {Math.round(
+                                p.Quantity % p.product.Box_quantity
+                              )}
+                            </span>
+                          ) : (
+                            <div className="w-[6vw] h-[6vw] rounded-lg border-2 flex items-center justify-center transition-all duration-200 C-bg-red C-border-red">
+                              <div className="w-3 h-3 rounded-full bg-white" />
+                            </div>
+                          )}
+                        </div>
+                      </div>
                     </div>
-                    <div className="w-[80%] flex justify-between items-center">
-                        <span>{p.product?.Label}</span>
-                        <span className="font-bold">{p.Quantity}</span>
-                    </div>
+                  </div>
                 </div>
               ))}
             </div>
