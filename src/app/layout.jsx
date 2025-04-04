@@ -35,6 +35,9 @@ export default function RootLayout({ children }) {
     case "/listes/create":
       title = "Créer une liste";
       break;
+    case `/listes/${pathname.split("/")[2]}`:
+      title = "Liste";
+      break;
   
     default:
       break;

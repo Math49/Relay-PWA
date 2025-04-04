@@ -88,9 +88,9 @@ export default function HomePage() {
   }
 
   return (
-    <div className="flex flex-col gap-[3vh] items-center justify-start relative z-10 text-white w-[100%] h-[100%] p-5">
+    <div className="flex flex-col gap-[3vh] items-center justify-start relative z-10 w-[100%] h-[100%] p-5">
       <div className="w-[100%]">
-        <BackButton path="/" />
+        <BackButton path="/listes" />
       </div>
       <div className="w-full flex items-center justify-end px-5 py-3">
         <div

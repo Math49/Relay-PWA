@@ -12,6 +12,18 @@ export async function getListes(ID_store) {
     }
 }
 
+export async function getSpecificList(ID_store, ID_list) {
+    try {
+        const res = await fetchData(`/list/${ID_store}/${ID_list}`, {
+            method: "GET",
+        });
+    
+        return await res;
+    } catch (error) {
+        return null;
+    }
+}
+
 export async function createList(ID_store, list) {
 
     list = Object.fromEntries(
@@ -24,7 +36,6 @@ export async function createList(ID_store, list) {
 
     const data = {
         ID_store: ID_store,
-        Creation_date: new Date().toISOString(),
         products: products,
     };
 
