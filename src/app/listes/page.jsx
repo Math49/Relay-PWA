@@ -49,12 +49,12 @@ export default function HomePage() {
         </div>
         <div className="flex flex-col sm:flex-row items-center sm:flex-wrap gap-4 justify-start p-5 w-full">
           {/* Listes */}
-          {listes.map((liste, index) => (
+          {listes.map((liste) => (
             <div key={liste.ID_list}
             className="flex items-center sm:flex-col cursor-pointer sm:justify-center justify-between w-[100%] sm:w-[24%] sm:h-[24vh] h-[12vh] C-bg-red-var2 rounded-[20px] px-6 py-3 overflow-hidden relative"
             onClick={() => router.push('/listes/' + liste.ID_list)}
           >
-            <p className="C-text-black font-bold text-2xl">Liste N°{index+1}</p>
+            <p className="C-text-black font-bold text-2xl">Liste N°{liste.ID_list}</p>
             <div className="h-full sm:h-auto flex items-end">
               <p className="C-text-black ">{liste.Creation_date}</p>
             </div>

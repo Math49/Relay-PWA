@@ -52,3 +52,16 @@ export async function createList(ID_store, list) {
         return null;
     }
 }
+
+export async function deleteList(ID_list) {
+    try {
+        const res = await fetchData(`/list`, {
+            method: "DELETE",
+            body: JSON.stringify({ ID_list: ID_list }),
+        });
+    
+        return await res;
+    } catch (error) {
+        return null;
+    }
+}
