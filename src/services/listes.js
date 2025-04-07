@@ -53,6 +53,19 @@ export async function createList(ID_store, list) {
     }
 }
 
+export async function updateList(ID_list, list) {
+    try {
+        const res = await fetchData(`/list/${ID_list}`, {
+            method: "PUT",
+            body: JSON.stringify({ products: list }),
+        });
+    
+        return await res;
+    } catch (error) {
+        return null;
+    }
+}
+
 export async function deleteList(ID_list) {
     try {
         const res = await fetchData(`/list`, {

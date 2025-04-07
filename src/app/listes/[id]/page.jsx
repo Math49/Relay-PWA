@@ -57,11 +57,11 @@ export default function HomePage() {
 
   const handleEdit = async () => {
     if (isEditing) {
-        console.log(editedQuantities);
       const payload = Object.entries(editedQuantities).map(([id, qty]) => ({
         ID_product: parseInt(id),
         Quantity: qty,
       }));
+      console.log(payload);
     }
     setIsEditing(!isEditing);
   };
@@ -73,7 +73,7 @@ export default function HomePage() {
 
     for (const p of liste.product_lists) {
       const Quantity = editedQuantities[p.ID_product] ?? p.Quantity;
-      const existing = currentStocks.find(s => s.ID_product === p.ID_product);
+      const existing = currentStocks.find((s) => s.ID_product === p.ID_product);
 
       if (existing) {
         updateStocks.push({
@@ -176,7 +176,9 @@ export default function HomePage() {
                   <div className="w-[90%] flex justify-between items-center">
                     <div
                       className={`bg-white flex h-[7vh] w-full rounded-[10px] border-[2px] C-border-red mb-2 overflow-hidden transition-all duration-300 ${
-                        checkedStates[p.ID_product] ? "line-through opacity-60" : ""
+                        checkedStates[p.ID_product]
+                          ? "line-through opacity-60"
+                          : ""
                       }`}
                     >
                       <div className="flex w-[60%]">
@@ -204,9 +206,25 @@ export default function HomePage() {
                       <div className="flex items-center gap-3 text-lg pr-4 justify-between w-[40%]">
                         <div className="flex items-center gap-1">
                           <i className="fa-solid fa-box C-text-red text-2xl" />
-                          <p className="C-text-black font-bold ">
-                            {Math.floor(editedQuantities[p.ID_product] / p.product.Box_quantity)}
+                          {isEditing ? (
+                              <input
+                                type="number"
+                                value={
+                                  Math.floor(editedQuantities[p.ID_product] / p.product.Box_quantity) ?? Math.floor(p.Quantity / p.product.Box_quantity)
+                                }
+                                onChange={(e) =>
+                                  handleChange(p.ID_product, e.target.value * p.product.Box_quantity)
+                                }
+                                className="w-[50px] text-center border border-gray-300 rounded C-text-black font-bold"
+                              />
+                            ) : (
+                              <p className="C-text-black font-bold ">
+                            {Math.floor(
+                              editedQuantities[p.ID_product] /
+                                p.product.Box_quantity
+                            )}
                           </p>
+                            )}
                         </div>
                         <div className="flex items-center gap-1">
                           <i className="fa-solid fa-dolly C-text-red text-2xl" />
@@ -214,7 +232,9 @@ export default function HomePage() {
                             isEditing ? (
                               <input
                                 type="number"
-                                value={editedQuantities[p.ID_product] ?? p.Quantity}
+                                value={
+                                  editedQuantities[p.ID_product] ?? p.Quantity
+                                }
                                 onChange={(e) =>
                                   handleChange(p.ID_product, e.target.value)
                                 }
@@ -223,8 +243,8 @@ export default function HomePage() {
                             ) : (
                               <span className="C-text-black font-bold">
                                 {Math.round(
-                                  (editedQuantities[p.ID_product] ?? p.Quantity) %
-                                    p.product.Box_quantity
+                                  (editedQuantities[p.ID_product] ??
+                                    p.Quantity) % p.product.Box_quantity
                                 )}
                               </span>
                             )
