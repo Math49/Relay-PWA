@@ -55,13 +55,30 @@ export async function createList(ID_store, list) {
 
 export async function updateList(ID_list, list) {
     try {
-        const res = await fetchData(`/list/${ID_list}`, {
+
+        list = Object.fromEntries(
+            Object.entries(list).filter(([_, qty]) => qty > 0 && qty !== "N/A")
+        );
+
+        const payload = Object.entries(list).map(([id, qty]) => ({
+                ID_product: parseInt(id),
+                Quantity: qty,
+              }));
+
+
+        const data = {
+            ID_list: ID_list,
+            products: payload,
+        };
+
+        const res = await fetchData(`/list`, {
             method: "PUT",
-            body: JSON.stringify({ products: list }),
+            body: JSON.stringify(data),
         });
-    
+        
         return await res;
     } catch (error) {
+        console.log("Error updating list:", error);
         return null;
     }
 }

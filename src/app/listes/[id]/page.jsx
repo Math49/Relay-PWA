@@ -5,7 +5,7 @@ import { useAuth } from "@/context/AuthProvider";
 import { getSpecificList, deleteList } from "@/services/listes";
 import { getCategories } from "@/services/category";
 import { getStocks, putStocks, createStock } from "@/services/stock";
-import { createList } from "@/services/listes";
+import { updateList } from "@/services/listes";
 import BackButton from "@/components/BackButton";
 import Separateur from "@/components/Separateur";
 import FloatingButtonList from "@/components/FloatingButtonList";
@@ -16,6 +16,7 @@ export default function HomePage() {
   const [categories, setCategories] = useState([]);
   const [checkedStates, setCheckedStates] = useState([]);
   const [editedQuantities, setEditedQuantities] = useState({});
+
   const { user } = useAuth();
   const params = useParams();
   const router = useRouter();
@@ -48,52 +49,39 @@ export default function HomePage() {
     }));
   };
 
-  const handleChange = (ID_product, value) => {
+  const handleBoxChange = (ID_product, boxValue, boxQuantity) => {
+    const current = editedQuantities[ID_product] ?? 0;
+    const units = current % boxQuantity;
+    const total = parseInt(boxValue) * boxQuantity + units;
     setEditedQuantities((prev) => ({
       ...prev,
-      [ID_product]: parseInt(value),
+      [ID_product]: total,
+    }));
+  };
+
+  const handleUnitChange = (ID_product, unitValue, boxQuantity) => {
+    const current = editedQuantities[ID_product] ?? 0;
+    const boxes = Math.floor(current / boxQuantity);
+    const total = boxes * boxQuantity + parseInt(unitValue);
+    setEditedQuantities((prev) => ({
+      ...prev,
+      [ID_product]: total,
     }));
   };
 
   const handleEdit = async () => {
     if (isEditing) {
-      const payload = Object.entries(editedQuantities).map(([id, qty]) => ({
-        ID_product: parseInt(id),
-        Quantity: qty,
-      }));
-      console.log(payload);
+      updateList(liste.ID_list, editedQuantities)
     }
     setIsEditing(!isEditing);
   };
 
   const handleValidate = async () => {
     const currentStocks = await getStocks(user.ID_store);
-    const updateStocks = [];
-    const newStocks = [];
-
-    for (const p of liste.product_lists) {
-      const Quantity = editedQuantities[p.ID_product] ?? p.Quantity;
-      const existing = currentStocks.find((s) => s.ID_product === p.ID_product);
-
-      if (existing) {
-        updateStocks.push({
-          ID_product: p.ID_product,
-          Quantity: existing.Quantity - Quantity,
-          Nmb_boxes: existing.Nmb_boxes,
-          Nmb_on_shelves: existing.Nmb_on_shelves,
-        });
-      } else {
-        newStocks.push({
-          ID_product: p.ID_product,
-          Quantity: -Quantity,
-          Nmb_boxes: 0,
-          Nmb_on_shelves: 0,
-        });
-      }
-    }
+    
+    
 
     if (updateStocks.length > 0) await putStocks(user.ID_store, updateStocks);
-    if (newStocks.length > 0) await createStock(user.ID_store, newStocks);
 
     await deleteList(liste.ID_list);
     router.push("/listes");
@@ -146,11 +134,11 @@ export default function HomePage() {
           <div key={cat.ID_category} className="mb-6 w-full">
             <h3 className="text-xl mb-2">{cat.category?.Label}</h3>
             <Separateur />
-            <div className="pl-4 flex flex-col gap-2 justify-start items-center w-full mt-3">
+            <div className="flex flex-col gap-2 justify-start items-center w-full mt-3">
               {produits.map((p) => (
                 <div
                   key={p.ID_product}
-                  className="mb-1 flex w-[90%] gap-5 rounded justify-around items-center"
+                  className="mb-1 flex w-[100%] gap-5 rounded justify-around items-center"
                 >
                   <div className="w-[10%]">
                     <label className="relative inline-flex items-center gap-3 cursor-pointer">
@@ -203,28 +191,33 @@ export default function HomePage() {
                           </div>
                         </div>
                       </div>
-                      <div className="flex items-center gap-3 text-lg pr-4 justify-between w-[40%]">
+                      <div className="flex items-center gap-3 text-lg pr-4 justify-center w-[40%]">
                         <div className="flex items-center gap-1">
                           <i className="fa-solid fa-box C-text-red text-2xl" />
                           {isEditing ? (
-                              <input
-                                type="number"
-                                value={
-                                  Math.floor(editedQuantities[p.ID_product] / p.product.Box_quantity) ?? Math.floor(p.Quantity / p.product.Box_quantity)
-                                }
-                                onChange={(e) =>
-                                  handleChange(p.ID_product, e.target.value * p.product.Box_quantity)
-                                }
-                                className="w-[50px] text-center border border-gray-300 rounded C-text-black font-bold"
-                              />
-                            ) : (
-                              <p className="C-text-black font-bold ">
-                            {Math.floor(
-                              editedQuantities[p.ID_product] /
-                                p.product.Box_quantity
-                            )}
-                          </p>
-                            )}
+                            <input
+                              type="number"
+                              value={Math.floor(
+                                editedQuantities[p.ID_product] /
+                                  p.product.Box_quantity
+                              )}
+                              onChange={(e) =>
+                                handleBoxChange(
+                                  p.ID_product,
+                                  e.target.value,
+                                  p.product.Box_quantity
+                                )
+                              }
+                              className="w-[50px] text-center border border-gray-300 rounded C-text-black font-bold"
+                            />
+                          ) : (
+                            <p className="C-text-black font-bold ">
+                              {Math.floor(
+                                editedQuantities[p.ID_product] /
+                                  p.product.Box_quantity
+                              )}
+                            </p>
+                          )}
                         </div>
                         <div className="flex items-center gap-1">
                           <i className="fa-solid fa-dolly C-text-red text-2xl" />
@@ -233,10 +226,15 @@ export default function HomePage() {
                               <input
                                 type="number"
                                 value={
-                                  editedQuantities[p.ID_product] ?? p.Quantity
+                                  editedQuantities[p.ID_product] %
+                                  p.product.Box_quantity
                                 }
                                 onChange={(e) =>
-                                  handleChange(p.ID_product, e.target.value)
+                                  handleUnitChange(
+                                    p.ID_product,
+                                    e.target.value,
+                                    p.product.Box_quantity
+                                  )
                                 }
                                 className="w-[50px] text-center border border-gray-300 rounded C-text-black font-bold"
                               />
