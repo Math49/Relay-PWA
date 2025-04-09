@@ -6,6 +6,8 @@ export async function getStocks(ID_store) {
       method: "GET",
     });
 
+    console.log("Stocks:", res);
+
     return await res;
   } catch (error) {
     return null;
