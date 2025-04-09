@@ -71,17 +71,36 @@ export default function HomePage() {
 
   const handleEdit = async () => {
     if (isEditing) {
-      updateList(liste.ID_list, editedQuantities)
+      updateList(liste.ID_list, editedQuantities);
     }
     setIsEditing(!isEditing);
   };
 
   const handleValidate = async () => {
     const currentStocks = await getStocks(user.ID_store);
-    
-    
+    const updateStocks = [];
 
-    if (updateStocks.length > 0) await putStocks(user.ID_store, updateStocks);
+    liste.product_lists.forEach((p) => {
+      const totalQuantity = editedQuantities[p.ID_product] ?? p.Quantity;
+      const boxQty = Math.floor(totalQuantity / p.product.Box_quantity);
+      const itemsQty = totalQuantity % p.product.Box_quantity;
+
+      const stockExist = currentStocks.find(
+        (s) => s.ID_product === p.ID_product
+      );
+
+      if (stockExist) {
+        updateStocks.push({
+          ID_product: p.ID_product,
+          Quantity: Math.max(stockExist.Quantity - totalQuantity, 0),
+          Nmb_boxes: Math.max(stockExist.Nmb_boxes - boxQty, 0),
+        });
+      }
+    });
+
+    if (updateStocks.length > 0) {
+      await putStocks(user.ID_store, updateStocks);
+    }
 
     await deleteList(liste.ID_list);
     router.push("/listes");
