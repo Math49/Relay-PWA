@@ -1,10 +1,11 @@
 "use client";
+import "@/styles/printList.css";
 import React, { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { useAuth } from "@/context/AuthProvider";
 import { getSpecificList, deleteList } from "@/services/listes";
 import { getCategories } from "@/services/category";
-import { getStocks, putStocks, createStock } from "@/services/stock";
+import { getStocks, putStocks } from "@/services/stock";
 import { updateList } from "@/services/listes";
 import BackButton from "@/components/BackButton";
 import Separateur from "@/components/Separateur";
@@ -81,13 +82,20 @@ export default function HomePage() {
     const updateStocks = [];
 
     liste.product_lists.forEach((p) => {
-      const totalQuantity = editedQuantities[p.ID_product] ?? p.Quantity;
+      let totalQuantity = editedQuantities[p.ID_product] ?? p.Quantity;
       const boxQty = Math.floor(totalQuantity / p.product.Box_quantity);
-      const itemsQty = totalQuantity % p.product.Box_quantity;
-
       const stockExist = currentStocks.find(
         (s) => s.ID_product === p.ID_product
       );
+
+      if (p.product.Packing === 1) {
+        if (boxQty > 0) {
+          totalQuantity = stockExist.Quantity;
+        } else {
+          totalQuantity = stockExist.Quantity - 1;
+        }
+      }
+
 
       if (stockExist) {
         updateStocks.push({
@@ -153,11 +161,11 @@ export default function HomePage() {
           <div key={cat.ID_category} className="mb-6 w-full">
             <h3 className="text-xl mb-2">{cat.category?.Label}</h3>
             <Separateur />
-            <div className="flex flex-col gap-2 justify-start items-center w-full mt-3">
+            <div className="flex flex-col sm:flex-wrap sm:flex-row sm:justify-around gap-2 justify-start items-center w-full mt-3">
               {produits.map((p) => (
                 <div
                   key={p.ID_product}
-                  className="mb-1 flex w-[100%] gap-5 rounded justify-around items-center"
+                  className="mb-1 flex w-[100%] sm:w-[40%] gap-5 rounded justify-around items-center"
                 >
                   <div className="w-[10%]">
                     <label className="relative inline-flex items-center gap-3 cursor-pointer">
@@ -168,10 +176,10 @@ export default function HomePage() {
                         className="sr-only"
                       />
                       <div
-                        className={`w-[8vw] h-[8vw] rounded-xl border-2 flex items-center justify-center transition-all duration-200 ${
+                        className={`w-[8vw] h-[8vw] C-border-red sm:w-[3vw] sm:h-[3vw] rounded-xl border-2 flex items-center justify-center transition-all duration-200 ${
                           checkedStates[p.ID_product]
-                            ? "C-bg-red C-border-red"
-                            : "C-border-red"
+                            ? "C-bg-red " 
+                            : ""
                         }`}
                       >
                         {checkedStates[p.ID_product] && (
@@ -210,7 +218,7 @@ export default function HomePage() {
                           </div>
                         </div>
                       </div>
-                      <div className="flex items-center gap-3 text-lg pr-4 justify-center w-[40%]">
+                      <div className="flex items-center gap-3 sm:gap-5 text-lg pr-4 justify-center w-[40%]">
                         <div className="flex items-center gap-1">
                           <i className="fa-solid fa-box C-text-red text-2xl" />
                           {isEditing ? (
@@ -266,7 +274,7 @@ export default function HomePage() {
                               </span>
                             )
                           ) : (
-                            <div className="w-[6vw] h-[6vw] rounded-lg border-2 flex items-center justify-center transition-all duration-200 C-bg-red C-border-red">
+                            <div className="w-[6vw] h-[6vw] sm:w-[2vw] sm:h-[2vw] rounded-lg border-2 flex items-center justify-center transition-all duration-200 C-bg-red C-border-red">
                               <div className="w-3 h-3 rounded-full bg-white" />
                             </div>
                           )}
@@ -280,6 +288,38 @@ export default function HomePage() {
           </div>
         );
       })}
+      <div className="print-area hidden-print">
+  <h2 className="text-center text-xl font-bold mb-4 print-title">
+    {formatDate(liste.created_at)}
+  </h2>
+
+  <table className="print-table">
+    <thead>
+      <tr>
+        <th>Produit</th>
+        <th>Code-barre</th>
+        <th>Boîtes</th>
+        <th>Unités</th>
+      </tr>
+    </thead>
+    <tbody>
+      {liste.product_lists.map((p) => (
+        <tr key={p.ID_product}>
+          <td>{p.product?.Label}</td>
+          <td>{p.product?.Barcode}</td>
+          <td>{Math.floor(p.Quantity / p.product.Box_quantity)}</td>
+            <td>
+            {p.product.Packing === 1 ? (
+              <span className="C-text-black font-bold">✗</span>
+            ) : (
+              Math.floor(p.Quantity % p.product.Box_quantity)
+            )}
+            </td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+</div>
     </div>
   );
 }

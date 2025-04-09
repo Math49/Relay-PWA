@@ -5,7 +5,7 @@ import { useAuth } from "@/context/AuthProvider";
 import { getListes } from "@/services/listes";
 import Footer from "@/components/Footer";
 import Link from "next/link";
-import { useRouter } from 'next/navigation';
+import { useRouter } from "next/navigation";
 
 export default function HomePage() {
   const { user } = useAuth();
@@ -17,8 +17,10 @@ export default function HomePage() {
       if (user && user.ID_store) {
         const listesData = await getListes(user.ID_store);
 
-        listesData.forEach(liste => {
-          liste.Creation_date = new Date(liste.Creation_date).toLocaleDateString("fr-FR", {
+        listesData.forEach((liste) => {
+          liste.Creation_date = new Date(
+            liste.Creation_date
+          ).toLocaleDateString("fr-FR", {
             day: "2-digit",
             month: "2-digit",
             year: "numeric",
@@ -40,34 +42,44 @@ export default function HomePage() {
       </div>
       <div className="w-full">
         <div className="w-full flex items-center justify-end px-5 py-3">
-        <Link
+          <Link
             href="/listes/create"
-              className=" C-text-white font-bold text-xl cursor-pointer C-bg-red rounded-full px-10 py-2"
-            >
-              Créer une liste
-            </Link>
+            className=" C-text-white font-bold text-xl cursor-pointer C-bg-red rounded-full px-10 py-2"
+          >
+            Créer une liste
+          </Link>
         </div>
         <div className="flex flex-col sm:flex-row items-center sm:flex-wrap gap-4 justify-start p-5 w-full">
           {/* Listes */}
-          {listes.map((liste) => (
-            <div key={liste.ID_list}
-            className="flex items-center sm:flex-col cursor-pointer sm:justify-center justify-between w-[100%] sm:w-[24%] sm:h-[24vh] h-[12vh] C-bg-red-var2 rounded-[20px] px-6 py-3 overflow-hidden relative"
-            onClick={() => router.push('/listes/' + liste.ID_list)}
-          >
-            <p className="C-text-black font-bold text-2xl">Liste N°{liste.ID_list}</p>
-            <div className="h-full sm:h-auto flex items-end">
-              <p className="C-text-black ">{liste.Creation_date}</p>
+          {listes.length > 0 ? (
+            listes.map((liste) => (
+              <div
+                key={liste.ID_list}
+                className="flex items-center sm:flex-col cursor-pointer sm:justify-center justify-between w-[100%] sm:w-[24%] sm:h-[24vh] h-[12vh] C-bg-red-var2 rounded-[20px] px-6 py-3 overflow-hidden relative"
+                onClick={() => router.push("/listes/" + liste.ID_list)}
+              >
+                <p className="C-text-black font-bold text-2xl">
+                  Liste N°{liste.ID_list}
+                </p>
+                <div className="h-full sm:h-auto flex items-end">
+                  <p className="C-text-black ">{liste.Creation_date}</p>
+                </div>
+                <img
+                  src="/images/elements/barcode_var2.svg"
+                  className="absolute w-[25vw] right-[40vw] sm:right-[2vw] sm:w-[10vw] bottom-0 z-10"
+                />
+              </div>
+            ))
+          ) : (
+            <div className="flex items-center justify-center w-full h-full">
+              <p className="C-text-black font-bold text-2xl">
+                Aucune liste créée
+              </p>
             </div>
-            <img
-              src="/images/elements/barcode_var2.svg"
-              className="absolute w-[25vw] right-[40vw] sm:right-[2vw] sm:w-[10vw] bottom-0 z-10"
-            />
-          </div>
-          ))}
+          )}
         </div>
       </div>
-            <Footer />
-      
+      <Footer />
     </div>
   );
 }
