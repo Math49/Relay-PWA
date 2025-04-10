@@ -38,6 +38,14 @@ export default function RootLayout({ children }) {
     case `/listes/${pathname.split("/")[2]}`:
       title = "Liste";
       break;
+
+    case "/a-propos":
+      title = "À propos";
+      break;
+
+    case "/configuration":
+      title = "Configuration";
+      break;
   
     default:
       break;
