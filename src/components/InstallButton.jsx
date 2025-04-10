@@ -49,7 +49,7 @@ export default function InstallButton() {
           marginTop: "20px",
         }}
       >
-        Installer l&apos;application
+        Installer
       </button>
     )
   );

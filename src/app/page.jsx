@@ -104,7 +104,7 @@ export default function HomePage() {
               />
             </Link>
             <Link
-              href="/config"
+              href="/configuration"
               className="flex items-center justify-around w-[100%] h-[12vh] C-bg-red-var2 rounded-[20px] p-4 overflow-hidden relative"
             >
               <i className="fa-solid fa-gears C-text-red-var1 text-5xl" aria-hidden="true"></i>
@@ -118,7 +118,7 @@ export default function HomePage() {
               />
             </Link>
             <Link
-              href="/about"
+              href="/a-propos"
               className="flex items-center justify-around w-[100%] h-[12vh] C-bg-red-var2 rounded-[20px] p-4 overflow-hidden relative"
             >
               <i className="fa-solid fa-store C-text-red-var1 text-5xl" aria-hidden="true"></i>
