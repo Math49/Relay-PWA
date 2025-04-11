@@ -32,10 +32,10 @@ export default function StockListMobile({ stocks, isEditing, setStocks }) {
             <div className="flex items-center justify-center h-full gap-3 border-r-black border-r-[1px] w-[15%]">
               <img
                 src={
-                  !stock.product.Image || "/images/elements/default-product.jpg"
+                  stock.product.Image || "/images/elements/default-product.jpg"
                 }
                 alt={stock.product?.Label}
-                className="w-auto h-full rounded-[10px] object-cover"
+                className="w-auto h-full rounded-[5px] object-cover"
               />
             </div>
             <div className="flex justify-between items-center w-[85%] h-full py-3 px-2 pr-4">

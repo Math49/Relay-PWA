@@ -102,7 +102,7 @@ export default function AddStockModal({ onClose, onSubmit, createProduct }) {
                   <div className="flex items-center justify-center h-full gap-3 border-r-black border-r-[1px] w-[15%]">
                     <img
                       src={
-                        !selectedProduct.Image ||
+                        selectedProduct.Image ||
                         "/images/elements/default-product.jpg"
                       }
                       alt={selectedProduct?.Label}
@@ -204,7 +204,7 @@ export default function AddStockModal({ onClose, onSubmit, createProduct }) {
                             <div className="flex items-center justify-center h-full gap-3 border-r-black border-r-[1px] w-[15%]">
                               <img
                                 src={
-                                  !p.Image ||
+                                  p.Image ||
                                   "/images/elements/default-product.jpg"
                                 }
                                 alt={p?.Label}
@@ -295,7 +295,7 @@ export default function AddStockModal({ onClose, onSubmit, createProduct }) {
                 <div className="flex items-center justify-center h-[8vh]">
                   <div className="flex items-center border-black sm:border-r-[1px] justify-center h-full gap-3 w-[15%]">
                     <img
-                      src={!p.Image || "/images/elements/default-product.jpg"}
+                      src={p.Image || "/images/elements/default-product.jpg"}
                       alt={p?.Label}
                       className="w-auto h-full rounded-[10px] object-cover"
                     />

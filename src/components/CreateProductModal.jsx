@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import { getCategories } from "@/services/category";
 import { useAuth } from "@/context/AuthProvider";
 import imageCompression from "browser-image-compression";
+import { createProduct } from "@/services/product";
 
 export default function CreateProductModal({ closeModal }) {
   const { user } = useAuth();
@@ -10,12 +11,12 @@ export default function CreateProductModal({ closeModal }) {
 
   const [categories, setCategories] = useState([]);
   const [form, setForm] = useState({
-    label: "",
-    barcode: "",
-    boxQty: 0,
-    isLoose: false,
-    category: "",
-    image: null,
+    Label: "",
+    Barcode: "",
+    Box_quantity: 0,
+    Packing: false,
+    ID_category: 0,
+    Image: null,
   });
 
   const fileInputRef = useRef();
@@ -56,26 +57,46 @@ export default function CreateProductModal({ closeModal }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    // 👉 Sauvegarde temporaire locale
+  
+    let base64Image = null;
+  
     if (form.image) {
-      const imgPath = `/images/products/${Date.now()}-${form.image.name}`;
-      const reader = new FileReader();
-
-      reader.onload = () => {
-        const base64 = reader.result;
-        // ⚠️ Tu devras implémenter côté API Laravel une route pour gérer ça (upload du fichier base64)
-        console.log("Base64 image to send:", base64);
-        console.log("Save path:", imgPath);
-      };
-      reader.readAsDataURL(form.image);
+      base64Image = await new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onloadend = () => resolve(reader.result);
+        reader.onerror = reject;
+        reader.readAsDataURL(form.image);
+      });
     }
+  
+    const { image, ...cleanForm } = form;
 
-    console.log("Formulaire:", form);
+    const payload = {
+      ...cleanForm,
+      Image: base64Image,
+      ID_category: parseInt(cleanForm.ID_category),
+      Box_quantity: parseInt(cleanForm.Box_quantity),
+    };
+  
+    console.log("Envoi du produit:", payload);
+  
+    await createProduct(payload);
+  
+    closeModal();
+    setForm({
+      Label: "",
+      Barcode: "",
+      Box_quantity: 0,
+      Packing: false,
+      ID_category: 0,
+      Image: null,
+    });
+    setPreview(null);
   };
+  
 
   return (
-    <div className="C-text-black flex flex-col w-[100vw] justify-center items-center z-50">
+    <div className="C-text-black flex flex-col w-[100vw] h-[70%] sm:w-[30vw] justify-center items-center sm:justify-between z-50">
       <div
         className="p-4 absolute top-2 left-2 cursor-pointer"
         onClick={closeModal}
@@ -100,8 +121,8 @@ export default function CreateProductModal({ closeModal }) {
             type="text"
             placeholder="Label"
             className="w-full border C-shadow-red-var2 C-border-red rounded-full p-2 mb-2"
-            value={form.label}
-            onChange={(e) => setForm({ ...form, label: e.target.value })}
+            value={form.Label}
+            onChange={(e) => setForm({ ...form, Label: e.target.value })}
             required
           />
         </div>
@@ -112,8 +133,11 @@ export default function CreateProductModal({ closeModal }) {
                 type="text"
                 placeholder="Code barre"
                 className="w-full border C-shadow-red-var2 C-border-red rounded-full p-2 mb-2"
-                value={form.barcode}
-                onChange={(e) => setForm({ ...form, barcode: e.target.value })}
+                value={form.Barcode}
+                onChange={(e) => setForm({ ...form, Barcode: e.target.value })}
+                minLength={13}
+                maxLength={13}
+                required
               />
             </div>
             <div className="w-full flex justify-between items-center gap-2">
@@ -124,10 +148,13 @@ export default function CreateProductModal({ closeModal }) {
                 id="boxQty"
                 placeholder="0"
                 className="border C-shadow-red-var2 C-border-red rounded-xl p-2 w-[50%]"
-                value={form.boxQty}
+                value={form.Box_quantity}
                 onChange={(e) =>
-                  setForm({ ...form, boxQty: parseInt(e.target.value) })
+                  setForm({ ...form, Box_quantity: parseInt(e.target.value) })
+
                 }
+                min={0}
+                required
               />
             </div>
             <div className="w-full flex items-center gap-3">
@@ -138,18 +165,18 @@ export default function CreateProductModal({ closeModal }) {
                 <input
                   type="checkbox"
                   id="vrac"
-                  checked={form.isLoose}
+                  checked={form.Packing}
                   onChange={(e) =>
-                    setForm({ ...form, isLoose: e.target.checked })
+                    setForm({ ...form, Packing: e.target.checked })
                   }
                   className="sr-only peer"
                 />
                 <div
                   className={`w-[4vh] h-[4vh] rounded-xl border-2 flex items-center justify-center transition-all duration-200 ${
-                    form.isLoose ? "C-bg-red C-border-red" : "C-border-red"
+                    form.Packing ? "C-bg-red C-border-red" : "C-border-red"
                   }`}
                 >
-                  {form.isLoose && (
+                  {form.Packing && (
                     <div className="w-3 h-3 rounded-full bg-white" />
                   )}
                 </div>
@@ -180,13 +207,14 @@ export default function CreateProductModal({ closeModal }) {
               accept="image/*"
               onChange={handleImageChange}
               className="hidden"
+              required
             />
           </div>
         </div>
         <div className="w-full flex justify-center items-center gap-2">
           <select
-            value={form.category}
-            onChange={(e) => setForm({ ...form, category: e.target.value })}
+            value={form.ID_category}
+            onChange={(e) => setForm({ ...form, ID_category: e.target.value })}
             className="w-full border C-shadow-red-var2 C-border-red rounded-full p-2 mb-4"
             required
           >

@@ -96,7 +96,7 @@ export default function HomePage() {
           >
             <ModalContent
               as={motion.div}
-              className="bg-white fixed rounded-t-[40px] bottom-0 left-0 min-w-min h-[70vh] pt-[2vh]"
+              className="bg-white fixed rounded-t-[40px] bottom-0 left-0 sm:right-0 sm:left-auto min-w-min h-[70vh] sm:h-[100vh] pt-[2vh]"
               initial={{ y: "100%" }}
               animate={{ y: 0 }}
               exit={{ y: "100%" }}
