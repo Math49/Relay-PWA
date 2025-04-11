@@ -207,19 +207,22 @@ export default function HomePage() {
       <AnimatePresence>
         {isOpen && (
           <Modal
-            isOpen={isOpen}
-            onClose={closeModal}
-            hideCloseButton={true}
-            backdrop="opaque"
+          isOpen={isOpen}
+          onClose={closeModal}
+          hideCloseButton={true}
+          backdrop="opaque"
+          classNames={{
+            wrapper: "bg-black",
+          }}
+        >
+          <ModalContent
+            as={motion.div}
+            className="bg-white fixed rounded-t-[40px] bottom-0 left-0 sm:right-0 sm:left-auto min-w-min h-[70vh] sm:h-[100vh] pt-[2vh]"
+            initial={{ y: "100%" }}
+            animate={{ y: 0 }}
+            exit={{ y: "100%" }}
+            transition={{ duration: 0.3, ease: "easeOut" }}
           >
-            <ModalContent
-              as={motion.div}
-              className="bg-white fixed rounded-t-[40px] bottom-0 left-0 w-full h-[90vh] border-t-[2px] C-border-red-var2 pt-[2vh] overflow-hidden"
-              initial={{ y: "100%" }}
-              animate={{ y: 0 }}
-              exit={{ y: "100%" }}
-              transition={{ duration: 0.3, ease: "easeOut" }}
-            >
               <div
                 className="p-4 cursor-pointer absolute "
                 onClick={closeModal}
