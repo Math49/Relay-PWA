@@ -28,6 +28,4 @@ jobs:
           ssh -T -p 5022 jnngjdpt@node165-eu.n0c.com << 'EOF'
             cd ~/relay-pwa
             git pull origin master
-            npm install
-            npm run build
           EOF
