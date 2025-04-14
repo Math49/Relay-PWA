@@ -113,7 +113,7 @@ export default function HomePage() {
       />
 
       {/* 🏷 Catégories */}
-      <div className="flex items-center justify-start gap-3 w-[100%] px-4 overflow-x-auto h-[10vh] min-h-min scrollbar-hide">
+      <div className="flex items-center justify-start gap-3 w-[100%] px-4 overflow-x-auto h-[10vh] min-h-max scrollbar-hide">
         {categories.map((category, index) => (
           <button
             key={category.ID_category}
@@ -212,12 +212,12 @@ export default function HomePage() {
           hideCloseButton={true}
           backdrop="opaque"
           classNames={{
-            wrapper: "bg-black",
+            wrapper: "bg-black/50",
           }}
         >
           <ModalContent
             as={motion.div}
-            className="bg-white fixed rounded-t-[40px] bottom-0 left-0 sm:right-0 sm:left-auto min-w-min h-[70vh] sm:h-[100vh] pt-[2vh]"
+            className="bg-white fixed rounded-t-[40px] bottom-0 left-0 sm:right-0 sm:left-auto min-w-min h-[90vh] sm:h-[100vh] pt-[2vh]"
             initial={{ y: "100%" }}
             animate={{ y: 0 }}
             exit={{ y: "100%" }}

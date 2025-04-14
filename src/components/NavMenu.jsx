@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { useAuth } from "@/context/AuthProvider";
 import { usePathname } from 'next/navigation'
 
-export default function NavMenu() {
+export default function NavMenu( closeModal ) {
 
   const { logout } = useAuth();
 
