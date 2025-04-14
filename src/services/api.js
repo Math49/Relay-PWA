@@ -1,5 +1,5 @@
 import { getAuthToken } from "@/services/auth";
-const API_BASE_URL = "http://127.0.0.1:8000/api"; // Remplace par l'URL de ton API
+const API_BASE_URL = "http://127.0.0.1:8000/api";
 // 🔥 Fonction générique pour appeler l'API
 export async function fetchData(endpoint, options = {}) {
   try {

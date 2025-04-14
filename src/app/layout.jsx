@@ -14,9 +14,6 @@ export default function RootLayout({ children }) {
   const isMobile = useMediaQuery("(max-width: 768px)");
   const pathname = usePathname();
 
-  
-
-
   let title = "";
 
   switch (pathname) {
@@ -27,7 +24,7 @@ export default function RootLayout({ children }) {
     case "/stocks":
       title = "Stocks";
       break;
-    
+
     case "/listes":
       title = "Listes";
       break;
@@ -46,7 +43,15 @@ export default function RootLayout({ children }) {
     case "/configuration":
       title = "Configuration";
       break;
-  
+
+    case "/configuration/categories":
+      title = "Catégories";
+      break;
+
+    case "/configuration/messages":
+      title = "Messages";
+      break;
+
     default:
       break;
   }

@@ -86,12 +86,12 @@ export default function AddStockModal({ onClose, onSubmit, createProduct }) {
   }, []);
 
   return (
-    <div className="flex flex-col bg-white rounded-[40px] items-center justify-between py-5 max-h-[80vh] C-text-black h-full w-full">
+    <div className="flex flex-col bg-white rounded-[40px] items-center justify-between py-5 max-h-[90vh] C-text-black h-full w-full">
       <div className="h-[10%]">
         <h2 className="text-center text-lg font-bold mb-2">Ajout au stock</h2>
       </div>
       <div className="flex flex-col sm:flex-row items-center justify-center gap-4 w-full sm:w-[90%] px-5 h-full sm:h-[90%]">
-        <div className="flex flex-col items-center justify-center gap-4 w-full h-[40%] sm:h-full">
+        <div className="flex flex-col items-center justify-center gap-4 w-full h-[60%] sm:h-full">
           <div className="w-full flex justify-center">
             {selectedProduct ? (
               <div

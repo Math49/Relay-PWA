@@ -44,7 +44,7 @@ export default function HomePage() {
               />
             </div>
             <Link
-              href="/categories"
+              href="/configuration/categories"
               className="flex items-center justify-around w-[100%] sm:w-[50%] h-[12vh] C-bg-red-var2 rounded-[20px] p-4 overflow-hidden relative"
             >
               <i
@@ -64,7 +64,7 @@ export default function HomePage() {
               />
             </Link>
             <Link
-              href="/messages"
+              href="/configuration/messages"
               className="flex items-center justify-around w-[100%] sm:w-[50%] h-[12vh] C-bg-red-var2 rounded-[20px] p-4 overflow-hidden relative"
             >
               <i
