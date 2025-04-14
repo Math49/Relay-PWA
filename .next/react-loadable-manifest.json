@@ -10,7 +10,7 @@
   "..\\node_modules\\@heroui\\modal\\dist\\chunk-UKDXCIYN.mjs -> @heroui/dom-animation": {
     "id": 668,
     "files": [
-      "static/chunks/287.62940b718c03ba01.js"
+      "static/chunks/668.f0b5cc7db7ea5ced.js"
     ]
   },
   "..\\node_modules\\@heroui\\navbar\\dist\\chunk-63OA3RRZ.mjs -> @heroui/dom-animation": {
@@ -48,13 +48,13 @@
   "..\\node_modules\\next\\dist\\client\\index.js -> ../pages/_app": {
     "id": 472,
     "files": [
-      "static/chunks/472.a3826d29d6854395.js"
+      "static/chunks/472.ebd0deb27f51cbb5.js"
     ]
   },
   "..\\node_modules\\next\\dist\\client\\index.js -> ../pages/_error": {
     "id": 9341,
     "files": [
-      "static/chunks/341.2903e54d3da731c1.js"
+      "static/chunks/341.0faf8e666ccc5427.js"
     ]
   }
 }

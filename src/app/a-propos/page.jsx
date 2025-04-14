@@ -85,16 +85,12 @@ export default function HomePage() {
           </div>
         </div>
         <div className="sm:w-[50%] flex justify-center">
-        {showButton ? (
           <button
             onClick={installPWA}
             className="C-bg-red-var2 C-text-black font-bold cursor-pointer px-[20vw] sm:px-[5vw] py-4 rounded-full text-2xl"
           >
             Télécharger
           </button>
-        ) : (
-          <p className="text-center C-text-black text-lg">Vous avez déjà installé l'application</p>
-        )}
         </div>
       </div>
       <Footer />
