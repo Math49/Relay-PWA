@@ -113,7 +113,7 @@ export default function HomePage() {
       />
 
       {/* 🏷 Catégories */}
-      <div className="flex items-center justify-start gap-3 w-[100%] px-4 overflow-x-auto h-[10vh] min-h-min scrollbar-hide">
+      <div className="flex items-center justify-start gap-3 w-[100%] px-4 overflow-x-auto h-[10vh] min-h-max scrollbar-hide">
         {categories.map((category, index) => (
           <button
             key={category.ID_category}

@@ -57,9 +57,9 @@ export default function CreateProductModal({ closeModal }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
+
     let base64Image = null;
-  
+
     if (form.image) {
       base64Image = await new Promise((resolve, reject) => {
         const reader = new FileReader();
@@ -68,7 +68,7 @@ export default function CreateProductModal({ closeModal }) {
         reader.readAsDataURL(form.image);
       });
     }
-  
+
     const { image, ...cleanForm } = form;
 
     const payload = {
@@ -76,12 +76,13 @@ export default function CreateProductModal({ closeModal }) {
       Image: base64Image,
       ID_category: parseInt(cleanForm.ID_category),
       Box_quantity: parseInt(cleanForm.Box_quantity),
+      Barcode: toString(cleanForm.Barcode),
     };
-  
+
     console.log("Envoi du produit:", payload);
-  
+
     await createProduct(payload);
-  
+
     closeModal();
     setForm({
       Label: "",
@@ -93,7 +94,6 @@ export default function CreateProductModal({ closeModal }) {
     });
     setPreview(null);
   };
-  
 
   return (
     <div className="C-text-black flex flex-col w-[100vw] h-[70%] sm:w-[30vw] justify-center items-center sm:justify-between z-50">
@@ -130,13 +130,20 @@ export default function CreateProductModal({ closeModal }) {
           <div className="flex flex-col gap-2 w-[50%] items-center justify-center">
             <div className="w-full">
               <input
-                type="text"
+                type="number"
                 placeholder="Code barre"
                 className="w-full border C-shadow-red-var2 C-border-red rounded-full p-2 mb-2"
                 value={form.Barcode}
                 onChange={(e) => setForm({ ...form, Barcode: e.target.value })}
-                minLength={13}
-                maxLength={13}
+                min={0}
+                max={9999999999999}
+                step={1}
+                onInvalid={(e) => {
+                  e.target.setCustomValidity(
+                    "Veuillez entrer un code barre valide."
+                  );
+                }}
+                onInput={(e) => e.target.setCustomValidity("")}
                 required
               />
             </div>
@@ -151,7 +158,6 @@ export default function CreateProductModal({ closeModal }) {
                 value={form.Box_quantity}
                 onChange={(e) =>
                   setForm({ ...form, Box_quantity: parseInt(e.target.value) })
-
                 }
                 min={0}
                 required
@@ -205,6 +211,7 @@ export default function CreateProductModal({ closeModal }) {
               ref={fileInputRef}
               type="file"
               accept="image/*"
+              capture="environment"
               onChange={handleImageChange}
               className="hidden"
               required

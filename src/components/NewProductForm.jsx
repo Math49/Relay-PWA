@@ -52,7 +52,7 @@ export default function NewProductForm({ data }) {
       <div className="flex items-center gap-2 w-full">
         <div className="flex flex-col w-[60%]">
           <input
-            type="text"
+            type="number"
             placeholder="Code barre"
             value={barcode}
             onChange={(e) => setBarcode(e.target.value)}

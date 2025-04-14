@@ -74,7 +74,7 @@ export default function FloatingButtonList({ onSupp, onEdit, isEditing, isValida
         whileTap={{ scale: 0.9 }}
         animate={{ rotate: isOpen ? 135 : 0 }}
         transition={{ type: "spring", stiffness: 260, damping: 20 }}
-        className="w-16 h-16 rounded-full C-bg-red C-text-white text-3xl flex items-center justify-center shadow-xl"
+        className="w-16 h-16 rounded-full C-bg-red C-text-white text-3xl cursor-pointer flex items-center justify-center shadow-xl"
       >
         <i className="fas fa-plus" aria-hidden="true"/>
       </motion.button>

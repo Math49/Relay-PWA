@@ -35,7 +35,7 @@ export default function MessageCarouselDesktop({ storeId }) {
       {/* 🔥 Flèche gauche */}
       <button
         onClick={prevSlide}
-        className="absolute left-0 z-10 C-bg-red text-white w-[40px] h-[40px] p-3 rounded-full flex justify-center items-center shadow-md transition"
+        className="absolute cursor-pointer left-0 z-10 C-bg-red text-white w-[40px] h-[40px] p-3 rounded-full flex justify-center items-center shadow-md transition"
       >
         <i className="fa-solid fa-chevron-left text-2xl" aria-hidden="true"></i>
       </button>
@@ -70,7 +70,7 @@ export default function MessageCarouselDesktop({ storeId }) {
       {/* 🔥 Flèche droite */}
       <button
         onClick={nextSlide}
-        className="absolute right-0 z-10 C-bg-red text-white w-[40px] h-[40px] p-3 rounded-full flex justify-center items-center shadow-md transition"
+        className="absolute cursor-pointer right-0 z-10 C-bg-red text-white w-[40px] h-[40px] p-3 rounded-full flex justify-center items-center shadow-md transition"
       >
         <i className="fa-solid fa-chevron-right text-2xl" aria-hidden="true"></i>
       </button>

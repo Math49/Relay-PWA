@@ -1,5 +1,6 @@
 import { getAuthToken } from "@/services/auth";
-const API_BASE_URL = "http://127.0.0.1:8000/api";
+// const API_BASE_URL = "http://127.0.0.1:8000/api";
+const API_BASE_URL = "https://relay-api.mathis-mercier.mds-angers.yt/api";
 // 🔥 Fonction générique pour appeler l'API
 export async function fetchData(endpoint, options = {}) {
   try {
