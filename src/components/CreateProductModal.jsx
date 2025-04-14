@@ -76,7 +76,7 @@ export default function CreateProductModal({ closeModal }) {
       Image: base64Image,
       ID_category: parseInt(cleanForm.ID_category),
       Box_quantity: parseInt(cleanForm.Box_quantity),
-      Barcode: toString(cleanForm.Barcode),
+      Barcode: cleanForm.Barcode.toString(),
     };
 
     console.log("Envoi du produit:", payload);
