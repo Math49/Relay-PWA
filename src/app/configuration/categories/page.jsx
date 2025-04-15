@@ -1,81 +1,13 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { DndContext, closestCenter } from "@dnd-kit/core";
-import {
-  SortableContext,
-  useSortable,
-  arrayMove,
-  verticalListSortingStrategy,
-  defaultAnimateLayoutChanges,
-} from "@dnd-kit/sortable";
+import { DndContext, closestCenter, useSensors, useSensor, MouseSensor, TouchSensor } from "@dnd-kit/core";
+import { SortableContext, arrayMove, verticalListSortingStrategy } from "@dnd-kit/sortable";
 import { restrictToVerticalAxis } from "@dnd-kit/modifiers";
-import { CSS } from "@dnd-kit/utilities";
-import { Trash2 } from "lucide-react";
-
+import DraggableCategory from "@/components/DraggableCategory";
 import { useAuth } from "@/context/AuthProvider";
-import {
-  getCategories,
-  deleteCategory,
-  updateCategories,
-} from "@/services/category";
+import { getCategories, deleteCategory, updateCategories } from "@/services/category";
 import BackButton from "@/components/BackButton";
 
-function DraggableCategory({ item, index, onDelete, color }) {
-  const {
-    attributes,
-    listeners,
-    setNodeRef,
-    transform,
-    transition,
-    isDragging,
-  } = useSortable({
-    id: item.ID_category_enable.toString(),
-    animateLayoutChanges: (args) =>
-      defaultAnimateLayoutChanges({ ...args, wasDragging: true }),
-    handle: true,
-  });
-  
-
-  const style = {
-    transform: CSS.Transform.toString(transform),
-    transition,
-    opacity: isDragging ? 0.5 : 1,
-    borderColor: color,
-  };
-
-  return (
-    <div
-  ref={setNodeRef}
-  style={style}
-  {...attributes}
-  className="relative p-4 rounded-[20px] shadow-md bg-white flex justify-between items-center border-t-[5px] w-[80%] mx-auto"
->
-  {/* Drag handle à gauche */}
-  <div
-    {...listeners}
-    className="cursor-grab text-gray-400 active:cursor-grabbing"
-  >
-    &#x2630; {/* Ou remplace par une icône drag genre <GripVertical /> si tu veux */}
-  </div>
-
-  <p className="text-xl font-bold text-black flex-1 text-center">
-    {item.category.Label}
-  </p>
-
-  {/* Supprimer */}
-  <button
-    onClick={(e) => {
-      e.stopPropagation();
-      onDelete(item);
-    }}
-    className="text-red-500"
-  >
-    <Trash2 size={20} />
-  </button>
-</div>
-
-  );
-}
 
 export default function HomePage() {
   const [categories, setCategories] = useState([]);
@@ -89,7 +21,6 @@ export default function HomePage() {
   }, [user]);
 
   const handleDelete = async (item) => {
-    console.log("Deleting category:", item);
     await deleteCategory(user.ID_store, item.ID_category);
     setCategories((prev) =>
       prev.filter((cat) => cat.ID_category_enable !== item.ID_category_enable)
@@ -97,7 +28,7 @@ export default function HomePage() {
   };
 
   const handleDragEnd = async ({ active, over }) => {
-    console.log("Drag ended:", active, over);
+
     if (!over || active.id === over.id) return;
 
     const oldIndex = categories.findIndex(
@@ -109,8 +40,19 @@ export default function HomePage() {
 
     const newList = arrayMove(categories, oldIndex, newIndex);
     setCategories(newList);
+    
     await updateCategories(user.ID_store, newList);
   };
+
+  const sensors = useSensors(
+    useSensor(MouseSensor),
+    useSensor(TouchSensor, {
+      activationConstraint: {
+        delay: 250,
+        tolerance: 5,
+      },
+    })
+  );
 
   return (
     <div className="flex flex-col gap-[5vh] items-center justify-center relative z-10 text-white w-full p-5">
@@ -118,6 +60,7 @@ export default function HomePage() {
       <h1 className="text-2xl font-bold text-white">Catégories</h1>
 
       <DndContext
+        sensors={sensors}
         collisionDetection={closestCenter}
         modifiers={[restrictToVerticalAxis]}
         onDragEnd={handleDragEnd}
