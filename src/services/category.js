@@ -41,6 +41,7 @@ export async function createCategory(Label) {
 
 export async function createCategoryEnable(ID_store, ID_category, Category_position) {
     try {
+        console.log(ID_store, ID_category, Category_position);
         const res = await fetchData(`/categoryEnable/${ID_store}`, {
             method: "POST",
             body: JSON.stringify({
