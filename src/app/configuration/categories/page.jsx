@@ -7,6 +7,7 @@ import DraggableCategory from "@/components/DraggableCategory";
 import { useAuth } from "@/context/AuthProvider";
 import { getCategories, deleteCategory, updateCategories } from "@/services/category";
 import BackButton from "@/components/BackButton";
+import { updateCategoriesPositions } from "@/services/category";
 
 
 export default function HomePage() {
@@ -40,8 +41,8 @@ export default function HomePage() {
 
     const newList = arrayMove(categories, oldIndex, newIndex);
     setCategories(newList);
-    
-    await updateCategories(user.ID_store, newList);
+
+    await updateCategoriesPositions(user.ID_store, newList);
   };
 
   const sensors = useSensors(
