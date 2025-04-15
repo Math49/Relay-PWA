@@ -5,9 +5,8 @@ import { SortableContext, arrayMove, verticalListSortingStrategy } from "@dnd-ki
 import { restrictToVerticalAxis } from "@dnd-kit/modifiers";
 import DraggableCategory from "@/components/DraggableCategory";
 import { useAuth } from "@/context/AuthProvider";
-import { getCategories, deleteCategory, updateCategories } from "@/services/category";
+import { getCategories, deleteCategory, updateCategoriesPositions } from "@/services/category";
 import BackButton from "@/components/BackButton";
-import { updateCategoriesPositions } from "@/services/category";
 
 
 export default function HomePage() {
