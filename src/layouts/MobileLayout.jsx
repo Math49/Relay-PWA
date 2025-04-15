@@ -52,6 +52,9 @@ export default function MobileLayout({ children, title }) {
             onClose={closeModal}
             hideCloseButton={true}
             backdrop="opaque"
+            classNames={{
+              wrapper: "bg-black/50",
+            }}
           >
             <ModalContent
               as={motion.div}

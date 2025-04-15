@@ -9,6 +9,7 @@ import { getCategories, deleteCategory, updateCategoriesPositions } from "@/serv
 import BackButton from "@/components/BackButton";
 import { Modal, ModalContent } from "@heroui/react";
 import { AnimatePresence, motion } from "framer-motion";
+import AddCategory from "@/components/AddCategory";
 
 
 export default function HomePage() {
@@ -16,7 +17,7 @@ export default function HomePage() {
   const { user } = useAuth();
   const colors = ["#4CAF50", "#9C27B0", "#36A2EB", "#FFCE56", "#FF5722"];
   const [isOpen, setIsOpen] = useState(false);
-
+  const [createCategory, setCreateCategory] = useState(false);
   const openModal = () => setIsOpen(true);
   const closeModal = () => setIsOpen(false);
   useEffect(() => {
@@ -24,6 +25,11 @@ export default function HomePage() {
       getCategories(user.ID_store).then(setCategories);
     }
   }, [user]);
+
+  const handleSetCreateCategory = () => {
+    console.log("test")
+    setCreateCategory(!createCategory);
+  };
 
   const handleDelete = async (item) => {
     await deleteCategory(user.ID_store, item.ID_category);
@@ -105,6 +111,9 @@ export default function HomePage() {
             onClose={closeModal}
             hideCloseButton={true}
             backdrop="opaque"
+            classNames={{
+              wrapper: "bg-black/50",
+            }}
           >
             <ModalContent
               as={motion.div}
@@ -114,7 +123,16 @@ export default function HomePage() {
               exit={{ y: "100%" }}
               transition={{ duration: 0.3, ease: "easeOut" }}
             >
-              
+              {!createCategory ? (
+                <>
+                <AddCategory createCategory={handleSetCreateCategory} closeModal={closeModal}/>
+                </>
+              ):(
+                <div>
+                  test
+                </div>
+              )}
+
             </ModalContent>
           </Modal>
         )}

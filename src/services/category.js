@@ -1,9 +1,52 @@
 const { fetchData } = require("./api");
 
+export async function getAllCategories() {
+    try {
+        const res = await fetchData(`/categories`, {
+            method: "GET",
+        });
+    
+        return await res;
+    } catch (error) {
+        return null;
+    }
+}
+
 export async function getCategories(ID_store) {
     try {
         const res = await fetchData(`/categoryEnable/${ID_store}`, {
             method: "GET",
+        });
+    
+        return await res;
+    } catch (error) {
+        return null;
+    }
+}
+
+export async function createCategory(Label) {
+    try {
+        const res = await fetchData(`/category`, {
+            method: "POST",
+            body: JSON.stringify({
+                Label: Label,
+            }),
+        });
+    
+        return await res;
+    } catch (error) {
+        return null;
+    }
+}
+
+export async function createCategoryEnable(ID_store, ID_category, Category_position) {
+    try {
+        const res = await fetchData(`/categoryEnable/${ID_store}`, {
+            method: "POST",
+            body: JSON.stringify({
+                ID_category: ID_category,
+                Category_position: Category_position,
+            }),
         });
     
         return await res;

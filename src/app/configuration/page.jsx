@@ -93,6 +93,9 @@ export default function HomePage() {
             onClose={closeModal}
             hideCloseButton={true}
             backdrop="opaque"
+            classNames={{
+              wrapper: "bg-black/50",
+            }}
           >
             <ModalContent
               as={motion.div}
