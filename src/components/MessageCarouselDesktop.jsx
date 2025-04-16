@@ -12,7 +12,12 @@ export default function MessageCarouselDesktop({ storeId }) {
     const fetchMessages = async () => {
       if (storeId) {
         const data = await getMessages(storeId);
-        setMessages(data);
+        const filteredData = data.filter(
+          (message) =>
+            !message.Deletion_date ||
+            new Date(message.Deletion_date).setHours(0, 0, 0, 0) >= new Date().setHours(0, 0, 0, 0)
+        );
+        setMessages(filteredData);
       }
     };
     fetchMessages();

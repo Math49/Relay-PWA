@@ -10,7 +10,12 @@ export default function MessageCarouselMobile({ storeId }) {
   useEffect(() => {
     const fetchMessages = async () => {
       const data = await getMessages(storeId);
-      setMessages(data);
+        const filteredData = data.filter(
+          (message) =>
+            !message.Deletion_date ||
+            new Date(message.Deletion_date).setHours(0, 0, 0, 0) >= new Date().setHours(0, 0, 0, 0)
+        );
+        setMessages(filteredData);
     };
     fetchMessages();
   }, [storeId]);
