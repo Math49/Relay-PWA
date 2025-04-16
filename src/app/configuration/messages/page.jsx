@@ -28,6 +28,17 @@ export default function HomePage() {
   const openModal = () => setIsOpen(true);
   const closeModal = () => setIsOpen(false);
 
+  const handleCreateMessage = async (message, dateEnd) => {
+    if (!user) return;
+    const newMessage = await createMessage(user.ID_store, message, dateEnd);
+    setMessages((prev) => [...prev, newMessage]);
+  }
+
+  const handleDeleteMessage = async (id) => {
+    await deleteMessage(id);
+    setMessages((prev) => prev.filter((message) => message.ID_message !== id));
+  }
+
   return (
     <>
       <div className="flex flex-col gap-[5vh] items-center justify-center relative z-10 text-white w-[100%] p-5">
@@ -59,10 +70,10 @@ export default function HomePage() {
               >
                 {/* Contenu rouge */}
                 <div
-                  className="flex flex-col gap-[3vh] items-center w-[90%] justify-between cursor-pointer C-bg-red rounded-[20px] py-5"
+                  className="flex flex-col gap-[3vh] items-center w-[90%] cursor-pointer C-bg-red rounded-[20px] p-5"
                   onClick={() => toggle(message.ID_message)}
                 >
-                  <p className="text-white">{message.Message}</p>
+                  <p className="text-white text-center">{message.Message}</p>
                   <div className="flex items-center gap-2 justify-around w-full">
                     <p className="text-white">{message.Creation_date}</p>
                     <p className="text-white">{message.Deletion_date}</p>
@@ -87,7 +98,9 @@ export default function HomePage() {
                         : "opacity-0 pointer-events-none"
                     }`}
                   >
-                    <button className="my-4 cursor-pointer">
+                    <button className="my-4 cursor-pointer"
+                    onClick={() => handleDeleteMessage(message.ID_message)}
+                    >
                       <i className="fa-solid fa-trash-can text-3xl"></i>
                     </button>
                   </div>

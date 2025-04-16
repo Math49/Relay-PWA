@@ -14,7 +14,7 @@ export async function getMessages(ID_store) {
 
 export async function createMessage(ID_store, message, DateEnd) {
     try {
-        const res = await fetchData(`/messages`, {
+        const res = await fetchData(`/message`, {
             method: "POST",
             body: JSON.stringify({
                 ID_store: ID_store,
@@ -32,7 +32,7 @@ export async function createMessage(ID_store, message, DateEnd) {
 
 export async function deleteMessage(ID_message) {
     try {
-        const res = await fetchData(`/messages`, {
+        const res = await fetchData(`/message`, {
             method: "DELETE",
             body: JSON.stringify({
                 ID_message: ID_message,
