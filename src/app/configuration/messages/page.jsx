@@ -34,6 +34,7 @@ export default function HomePage() {
     if (!user) return;
     const newMessage = await createMessage(user.ID_store, message, dateEnd);
     setMessages((prev) => [...prev, newMessage]);
+    setMessage("");
     closeModal();
   };
 
@@ -58,7 +59,7 @@ export default function HomePage() {
             </div>
           </div>
         </div>
-        <div className="flex flex-col items-center justify-start w-[100%]">
+        <div className="flex flex-col items-center sm:flex-row sm:flex-wrap sm:justify-center justify-start w-[100%]">
           {messages.map((message) => {
             const isExpanded = expanded === message.ID_message;
 
@@ -69,7 +70,7 @@ export default function HomePage() {
                 initial={false}
                 animate={{ borderRadius: "10px" }}
                 transition={{ duration: 0.3 }}
-                className="bg-white w-full flex flex-col items-center rounded-[10px] border-[2px] overflow-hidden mb-5"
+                className="bg-white w-full sm:w-[30%] flex flex-col items-center rounded-[10px] border-[2px] overflow-hidden mb-5"
               >
                 <div
                   className="flex flex-col gap-[3vh] items-center w-[90%] cursor-pointer C-bg-red rounded-[20px] p-5"
