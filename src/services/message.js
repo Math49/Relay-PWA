@@ -11,24 +11,31 @@ export async function getMessages(ID_store) {
         return null;
     }
 }
+function formatDateToMySQL(date) {
+    return date.toISOString().slice(0, 19).replace('T', ' ');
+  }
+  
 
-export async function createMessage(ID_store, message, DateEnd) {
+  export async function createMessage(ID_store, message, DateEnd) {
     try {
-        const res = await fetchData(`/message`, {
-            method: "POST",
-            body: JSON.stringify({
-                ID_store: ID_store,
-                Message: message,
-                Creation_date: new Date().toISOString(),
-                Deletion_date: DateEnd.toISOString(),
-            }),
-        });
-    
-        return await res;
+      const now = new Date();
+  
+      const res = await fetchData(`/message`, {
+        method: "POST",
+        body: JSON.stringify({
+          ID_store: ID_store,
+          Message: message,
+          Creation_date: formatDateToMySQL(now),
+          Deletion_date: formatDateToMySQL(DateEnd),
+        }),
+      });
+  
+      return await res;
     } catch (error) {
-        return null;
+      return null;
     }
-}
+  }
+  
 
 export async function deleteMessage(ID_message) {
     try {

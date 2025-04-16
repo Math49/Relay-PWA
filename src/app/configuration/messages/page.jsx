@@ -10,6 +10,8 @@ export default function HomePage() {
   const [isOpen, setIsOpen] = useState(false);
   const [expanded, setExpanded] = useState(null);
   const [messages, setMessages] = useState([]);
+  const [message, setMessage] = useState("");
+  const [dateEnd, setDateEnd] = useState(new Date());
 
   const toggle = (id) => setExpanded((prev) => (prev === id ? null : id));
 
@@ -32,12 +34,13 @@ export default function HomePage() {
     if (!user) return;
     const newMessage = await createMessage(user.ID_store, message, dateEnd);
     setMessages((prev) => [...prev, newMessage]);
-  }
+    closeModal();
+  };
 
   const handleDeleteMessage = async (id) => {
     await deleteMessage(id);
     setMessages((prev) => prev.filter((message) => message.ID_message !== id));
-  }
+  };
 
   return (
     <>
@@ -68,20 +71,20 @@ export default function HomePage() {
                 transition={{ duration: 0.3 }}
                 className="bg-white w-full flex flex-col items-center rounded-[10px] border-[2px] overflow-hidden mb-5"
               >
-                {/* Contenu rouge */}
                 <div
                   className="flex flex-col gap-[3vh] items-center w-[90%] cursor-pointer C-bg-red rounded-[20px] p-5"
                   onClick={() => toggle(message.ID_message)}
                 >
                   <p className="text-white text-center">{message.Message}</p>
-                  <div className="flex items-center gap-2 justify-around w-full">
-                    <p className="text-white">{message.Creation_date}</p>
-                    <p className="text-white">{message.Deletion_date}</p>
-                    
+                  <div className="flex items-center gap-2 justify-end w-full">
+                    <p className="text-white text-sm">
+                      {new Date(message.Deletion_date).toLocaleDateString(
+                        "fr-FR"
+                      )}
+                    </p>
                   </div>
                 </div>
 
-                {/* Partie rose animée */}
                 <motion.div
                   layout
                   initial={false}
@@ -98,8 +101,9 @@ export default function HomePage() {
                         : "opacity-0 pointer-events-none"
                     }`}
                   >
-                    <button className="my-4 cursor-pointer"
-                    onClick={() => handleDeleteMessage(message.ID_message)}
+                    <button
+                      className="my-4 cursor-pointer"
+                      onClick={() => handleDeleteMessage(message.ID_message)}
                     >
                       <i className="fa-solid fa-trash-can text-3xl"></i>
                     </button>
@@ -128,7 +132,51 @@ export default function HomePage() {
               animate={{ y: 0 }}
               exit={{ y: "100%" }}
               transition={{ duration: 0.3, ease: "easeOut" }}
-            ></ModalContent>
+            >
+              <div className="C-text-black flex flex-col w-[100vw] h-[70%] sm:w-[30vw] justify-center items-center sm:justify-start sm:gap-[20vh] z-50">
+                <div
+                  className="p-4 absolute top-2 left-2 cursor-pointer"
+                  onClick={closeModal}
+                >
+                  <i
+                    className="fa-solid fa-arrow-left-long text-3xl C-text-black"
+                    aria-hidden="true"
+                  ></i>
+                </div>
+                <div className="w-[100%] flex justify-center items-center mt-[3vh]">
+                  <h2 className="C-text-black font-bold text-2xl mb-6">
+                    Création message
+                  </h2>
+                </div>
+                <div className="bg-white rounded-2xl flex flex-col justify-center items-center gap-5 p-6 w-[90%] max-w-md">
+                  <div className="w-full">
+                    <textarea
+                      name="message"
+                      id="message"
+                      value={message}
+                      onChange={(e) => setMessage(e.target.value)}
+                      className="border text-lg C-border-red-var2 w-full p-3 rounded-[20px] h-[20vh] resize-none"
+                      placeholder="Écrivez votre message ici..."
+                    ></textarea>
+                  </div>
+                  <div className="w-full">
+                    <label>Date de fin</label>
+                    <input
+                      type="date"
+                      value={dateEnd.toISOString().split("T")[0]}
+                      onChange={(e) => setDateEnd(new Date(e.target.value))}
+                      className="border text-lg C-border-red-var2 w-full p-3 rounded-full"
+                    />
+                  </div>
+                  <button
+                    onClick={() => handleCreateMessage(message, dateEnd)}
+                    className="C-text-white font-bold w-full text-xl cursor-pointer C-bg-red rounded-full px-10 py-2"
+                  >
+                    Ajouter
+                  </button>
+                </div>
+              </div>
+            </ModalContent>
           </Modal>
         )}
       </AnimatePresence>
