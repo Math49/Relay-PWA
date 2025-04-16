@@ -44,47 +44,57 @@ export default function HomePage() {
             </div>
           </div>
         </div>
-        <div className="flex flex-col items-start justify-start w-[100%]">
-          {messages.map((message) => (
-            <div
-              key={message.ID_message}
-              className="bg-white w-[90%] rounded-[10px] border-[2px] C-border-red mb-2 overflow-hidden transition-all duration-300"
-            >
-              <div
-                className="flex items-center justify-between cursor-pointer bg-[#cc0931] rounded-[20px] p-4"
-                onClick={() => toggle(message.ID_message)}
-              >
-                <p className="text-white font-semibold">{message.Message}</p>
-              </div>
+        <div className="flex flex-col items-center justify-start w-[100%]">
+          {messages.map((message) => {
+            const isExpanded = expanded === message.ID_message;
 
-              <div
-                className={`transition-all duration-300 ease-in-out overflow-hidden ${
-                  expanded === message.ID_message
-                    ? "max-h-[200px] opacity-100 mt-2"
-                    : "max-h-0 opacity-0"
-                }`}
+            return (
+              <motion.div
+                key={message.ID_message}
+                layout
+                initial={false}
+                animate={{ borderRadius: "10px" }}
+                transition={{ duration: 0.3 }}
+                className="bg-white w-full flex flex-col items-center rounded-[10px] border-[2px] overflow-hidden mb-5"
               >
-                <div className="bg-rose-100 rounded-[20px] p-4 flex justify-center items-center">
-                  <button>
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="h-8 w-8 text-white"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                      strokeWidth={2}
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6M1 7h22M10 3h4a1 1 0 011 1v2H9V4a1 1 0 011-1z"
-                      />
-                    </svg>
-                  </button>
+                {/* Contenu rouge */}
+                <div
+                  className="flex flex-col gap-[3vh] items-center w-[90%] justify-between cursor-pointer C-bg-red rounded-[20px] py-5"
+                  onClick={() => toggle(message.ID_message)}
+                >
+                  <p className="text-white">{message.Message}</p>
+                  <div className="flex items-center gap-2 justify-around w-full">
+                    <p className="text-white">{message.Creation_date}</p>
+                    <p className="text-white">{message.Deletion_date}</p>
+                    
+                  </div>
                 </div>
-              </div>
-            </div>
-          ))}
+
+                {/* Partie rose animée */}
+                <motion.div
+                  layout
+                  initial={false}
+                  animate={{
+                    height: isExpanded ? "70px" : "10px",
+                  }}
+                  transition={{ duration: 0.3 }}
+                  className="C-bg-red-var2 w-[80%] flex flex-col items-center justify-end overflow-hidden rounded-b-[20px]"
+                >
+                  <div
+                    className={`transition-opacity duration-300 h-full w-full flex justify-center items-center ${
+                      isExpanded
+                        ? "opacity-100"
+                        : "opacity-0 pointer-events-none"
+                    }`}
+                  >
+                    <button className="my-4 cursor-pointer">
+                      <i className="fa-solid fa-trash-can text-3xl"></i>
+                    </button>
+                  </div>
+                </motion.div>
+              </motion.div>
+            );
+          })}
         </div>
       </div>
       <AnimatePresence>
