@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "NODE_ENV=production node app.js",
     "lint": "next lint",
-    "pwa": "npm run build && npm start"
+    "pwa": "npm run build && npm start",
+    "cypress": "cypress open"
   },
   "dependencies": {
     "@dnd-kit/core": "^6.3.1",
@@ -25,6 +26,7 @@
   "devDependencies": {
     "@eslint/eslintrc": "^3",
     "@tailwindcss/postcss": "^4",
+    "cypress": "^14.3.0",
     "eslint": "^9",
     "eslint-config-next": "15.2.1",
     "sass": "^1.85.1",
