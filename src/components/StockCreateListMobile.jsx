@@ -66,10 +66,10 @@ export default function StockCreateListMobile({ stocks, list, setList }) {
         return (
           <div
             key={stock.ID_stock}
-            className="bg-white w-[90%] rounded-[10px] border-[2px] C-border-red mb-2 overflow-hidden transition-all duration-300"
+            className="bg-white w-[100%] rounded-[10px] border-[2px] C-border-red mb-2 overflow-hidden transition-all duration-300"
           >
             <div
-              className="flex cursor-pointer h-[8vh] min-h-max"
+              className="flex cursor-pointer items-center h-[8vh] min-h-min"
               onClick={() => {
                 toggle(stock.ID_stock);
               }}
@@ -83,7 +83,7 @@ export default function StockCreateListMobile({ stocks, list, setList }) {
                   className="w-auto h-auto rounded-[10px] object-cover"
                 />
               </div>
-              <div className="flex justify-between border-black border-l-[1px] items-center w-[85%] h-full py-3 px-2 pr-4">
+              <div className="flex justify-between border-black min-h-min border-l-[1px] items-center w-[85%] h-full py-3 px-2 pr-4">
                 <div className="w-[60%]">
                   <p className="C-text-black font-semibold text-xl">
                     {stock.product?.Label}
@@ -152,6 +152,7 @@ export default function StockCreateListMobile({ stocks, list, setList }) {
               <div className="flex justify-around items-center px-2 py-3 border-t C-border-light">
                 <div className="flex items-center justify-center gap-4">
                   {/* Boîtes */}
+                  <div className="flex flex-col items-center gap-2">
                   <i className="fa-solid fa-box text-2xl C-text-red"></i>
                   <div className="flex items-center gap-2">
                     <button
@@ -174,10 +175,13 @@ export default function StockCreateListMobile({ stocks, list, setList }) {
                     >
                       +1
                     </button>
+                    </div>
                   </div>
 
                   {/* Articles */}
-                  <i className="fa-solid fa-dolly text-2xl C-text-red"></i>
+                  <div className="flex flex-col items-center gap-2">
+                    <i className="fa-solid fa-dolly text-2xl C-text-red"></i>
+                    <div className="flex items-center gap-2">
                   {stock.product.Packing === 0 ? (
                     <>
                       <button
@@ -222,6 +226,8 @@ export default function StockCreateListMobile({ stocks, list, setList }) {
                       </div>
                     </label>
                   )}
+                  </div>
+                  </div>
                 </div>
               </div>
             </div>

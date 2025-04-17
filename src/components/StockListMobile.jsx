@@ -26,21 +26,21 @@ export default function StockListMobile({ stocks, isEditing, setStocks }) {
           className="bg-white w-[90%] rounded-[10px] border-[2px] C-border-red mb-2 overflow-hidden transition-all duration-300"
         >
           <div
-            className="flex cursor-pointer h-[5vh]"
+            className="flex cursor-pointer items-center h-[5vh] min-h-min "
             onClick={() => toggle(stock.ID_stock)}
           >
-            <div className="flex items-center justify-center h-full gap-3 border-r-black border-r-[1px] w-[15%]">
+            <div className="flex items-center justify-center h-full gap-3 w-[15%]">
               <img
                 src={
                   stock.product.Image || "/images/elements/default-product.jpg"
                 }
                 alt={stock.product?.Label}
-                className="w-auto h-full rounded-[5px] object-cover"
+                className="w-full h-auto rounded-[5px] object-cover"
               />
             </div>
-            <div className="flex justify-between items-center w-[85%] h-full py-3 px-2 pr-4">
+            <div className="flex justify-between border-l-black border-l-[1px] items-center min-h-min w-[85%] h-full py-3 px-2 pr-4">
               <div className="w-[50%]">
-                <p className="C-text-black font-semibold text-xl">
+                <p className="C-text-black font-semibold text-lg">
                   {stock.product?.Label}
                 </p>
                 <p className="C-text-black font-normal text-sm">

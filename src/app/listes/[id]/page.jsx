@@ -161,7 +161,7 @@ export default function HomePage() {
           <div key={cat.ID_category} className="mb-6 w-full">
             <h3 className="text-xl mb-2">{cat.category?.Label}</h3>
             <Separateur />
-            <div className="flex flex-col sm:flex-wrap sm:flex-row sm:justify-around gap-2 justify-start items-center w-full mt-3">
+            <div className="flex flex-col sm:flex-wrap sm:flex-row sm:justify-start gap-[10%] justify-start items-center w-full mt-3">
               {produits.map((p) => (
                 <div
                   key={p.ID_product}
@@ -190,25 +190,25 @@ export default function HomePage() {
                   </div>
                   <div className="w-[90%] flex justify-between items-center">
                     <div
-                      className={`bg-white flex h-[7vh] w-full rounded-[10px] border-[2px] C-border-red mb-2 overflow-hidden transition-all duration-300 ${
+                      className={`bg-white flex w-full rounded-[10px] border-[2px] min-h-min C-border-red mb-2 overflow-hidden transition-all duration-300 ${
                         checkedStates[p.ID_product]
                           ? "line-through opacity-60"
                           : ""
                       }`}
                     >
-                      <div className="flex w-[60%]">
+                      <div className="flex w-[80%] ">
                         <div className="flex items-center justify-center h-full gap-3 border-r-black border-r-[1px] w-[30%]">
                           <img
                             src={
-                              !p.product.Image ||
+                              p.product.Image ||
                               "/images/elements/default-product.jpg"
                             }
                             alt={p.product?.Label}
-                            className="w-auto h-full rounded-[10px] object-cover"
+                            className="w-full h-auto rounded-[10px] object-cover"
                           />
                         </div>
-                        <div className="flex justify-between items-center w-[70%] h-full py-3 px-2 pr-4">
-                          <div className="w-[30%]">
+                        <div className="flex justify-between min-h-min items-center w-[70%] h-full py-3 px-2 pr-4">
+                          <div>
                             <p className="C-text-black font-semibold text-xl">
                               {p.product?.Label}
                             </p>
@@ -218,7 +218,7 @@ export default function HomePage() {
                           </div>
                         </div>
                       </div>
-                      <div className="flex items-center gap-3 sm:gap-5 text-lg pr-4 justify-center w-[40%]">
+                      <div className="flex flex-col items-center gap-3 sm:gap-5 text-lg pr-4 justify-center w-[20%]">
                         <div className="flex items-center gap-1">
                           <i className="fa-solid fa-box C-text-red text-2xl" />
                           {isEditing ? (

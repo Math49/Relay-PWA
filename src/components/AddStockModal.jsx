@@ -98,20 +98,20 @@ export default function AddStockModal({ onClose, onSubmit, createProduct }) {
                 key={selectedProduct.ID_product}
                 className="bg-white w-[90%] rounded-[10px] border-[2px] C-border-red overflow-hidden transition-all duration-300"
               >
-                <div className="flex cursor-pointer h-[5vh]">
-                  <div className="flex items-center justify-center h-full gap-3 border-r-black border-r-[1px] w-[15%]">
+                <div className="flex cursor-pointer items-center h-[5vh] min-h-min">
+                  <div className="flex items-center justify-center h-full gap-3 w-[15%]">
                     <img
                       src={
                         selectedProduct.Image ||
                         "/images/elements/default-product.jpg"
                       }
                       alt={selectedProduct?.Label}
-                      className="w-auto h-full rounded-[10px] object-cover"
+                      className="w-full h-auto rounded-[10px] object-cover"
                     />
                   </div>
-                  <div className="flex justify-between items-center w-[85%] h-full py-3 px-2 pr-4">
+                  <div className="flex justify-between items-center border-l-black border-l-[1px] min-h-min w-[85%] h-full py-3 px-2 pr-4">
                     <div className="w-[60%]">
-                      <p className="C-text-black font-semibold text-xl">
+                      <p className="C-text-black font-semibold text-lg">
                         {selectedProduct?.Label}
                       </p>
                       <p className="C-text-black font-normal text-sm">
@@ -197,23 +197,23 @@ export default function AddStockModal({ onClose, onSubmit, createProduct }) {
                       {categoryProducts.map((p) => (
                         <div
                           key={p.ID_product}
-                          className="bg-white w-[90%] rounded-[10px] border-[2px] C-border-red overflow-hidden transition-all duration-300"
+                          className="bg-white w-[100%] rounded-[10px] border-[2px] C-border-red overflow-hidden transition-all duration-300"
                           onClick={() => setSelectedProduct(p)}
                         >
-                          <div className="flex cursor-pointer h-[6vh]">
-                            <div className="flex items-center justify-center h-full gap-3 border-r-black border-r-[1px] w-[15%]">
+                          <div className="flex cursor-pointer items-center h-[6vh] min-h-min">
+                            <div className="flex items-center justify-center h-full gap-3 w-[15%]">
                               <img
                                 src={
                                   p.Image ||
                                   "/images/elements/default-product.jpg"
                                 }
                                 alt={p?.Label}
-                                className="w-auto h-full rounded-[10px] object-cover"
+                                className="w-full h-auto object-cover"
                               />
                             </div>
-                            <div className="flex justify-between items-center w-[85%] h-full py-3 px-2 pr-4">
+                            <div className="flex justify-between items-center min-h-min border-l-black border-l-[1px] w-[85%] h-full py-3 px-2 pr-4">
                               <div className="w-[60%]">
-                                <p className="C-text-black font-semibold text-xl">
+                                <p className="C-text-black font-semibold text-lg">
                                   {p?.Label}
                                 </p>
                                 <p className="C-text-black font-normal text-sm">
@@ -290,48 +290,50 @@ export default function AddStockModal({ onClose, onSubmit, createProduct }) {
             {pendingProducts.map((p) => (
               <div
                 key={p.ID_product}
-                className="bg-white w-[90%] rounded-[10px] border-[2px] C-border-red mb-2 overflow-hidden transition-all duration-300 min-h-[5vh]"
+                className="bg-white w-[100%] rounded-[10px] border-[2px] C-border-red mb-2 overflow-hidden transition-all duration-300 min-h-[5vh]"
               >
-                <div className="flex items-center justify-center h-[8vh]">
-                  <div className="flex items-center border-black sm:border-r-[1px] justify-center h-full gap-3 w-[15%]">
+                <div className="flex items-center justify-center min-h-min h-[8vh]">
+                  <div className="flex items-center  justify-center h-full gap-3 w-[15%]">
                     <img
                       src={p.Image || "/images/elements/default-product.jpg"}
                       alt={p?.Label}
-                      className="w-auto h-full rounded-[10px] object-cover"
+                      className="w-full h-auto object-cover"
                     />
                   </div>
-                  <div className="flex justify-between border-black border-l-[1px] sm:border-0 items-center w-[85%] h-full py-3 px-2 pr-4">
-                    <div className="w-[40%]">
-                      <p className="C-text-black font-semibold text-xl">
+                  <div className="flex justify-between border-black min-h-min border-l-[1px] sm:border-0 items-center w-[85%] h-full py-3 px-2 pr-4">
+                    <div className="w-[30%]">
+                      <p className="C-text-black font-semibold text-lg">
                         {p?.Label}
                       </p>
                       <p className="C-text-black font-normal text-sm">
                         {p?.Barcode}
                       </p>
                     </div>
-                    <div className="flex items-center gap-3 text-lg justify-between w-[60%]">
-                      <div className="flex items-center gap-1">
-                        <i
-                          className="fa-solid fa-boxes-stacked C-text-red text-2xl"
-                          aria-hidden="true"
-                        ></i>
-                        <p className="C-text-black font-bold ">
-                          {p.Box_quantity}
-                        </p>
+                    <div className="flex flex-col items-end gap-3 text-lg justify-center w-[70%]">
+                      <div className="flex items-center gap-3 text-lg justify-between">
+                        <div className="flex items-center gap-1">
+                          <i
+                            className="fa-solid fa-boxes-stacked C-text-red text-2xl"
+                            aria-hidden="true"
+                          ></i>
+                          <p className="C-text-black font-bold ">
+                            {p.Box_quantity}
+                          </p>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <i
+                            className="fa-solid fa-box text-2xl C-text-red"
+                            aria-hidden="true"
+                          ></i>
+                          <input
+                            type="checkbox"
+                            className="w-5 h-5"
+                            disabled
+                            checked={p.Packing === 1}
+                          />
+                        </div>
                       </div>
-                      <div className="flex items-center gap-2">
-                        <i
-                          className="fa-solid fa-box text-2xl C-text-red"
-                          aria-hidden="true"
-                        ></i>
-                        <input
-                          type="checkbox"
-                          className="w-5 h-5"
-                          disabled
-                          checked={p.Packing === 1}
-                        />
-                      </div>
-                      <div className="flex items-center gap-1">
+                      <div className="flex items-center gap-1 ">
                         <i
                           className="fa-solid fa-dolly C-text-red text-2xl"
                           aria-hidden="true"

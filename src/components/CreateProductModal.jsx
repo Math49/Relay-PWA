@@ -96,7 +96,7 @@ export default function CreateProductModal({ closeModal }) {
   };
 
   return (
-    <div className="C-text-black flex flex-col w-[100vw] h-full sm:w-[30vw] justify-center items-center sm:justify-between z-50">
+    <div className="C-text-black flex flex-col w-[100vw] h-full sm:w-[30vw] justify-center items-center z-50">
       <div
         className="p-4 absolute top-2 left-2 cursor-pointer"
         onClick={closeModal}

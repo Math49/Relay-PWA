@@ -76,7 +76,7 @@ export default function StockCreateListDesktop({ stocks, list, setList }) {
                         "/images/elements/default-product.jpg"
                       }
                       alt={stock.product?.Label}
-                      className="w-auto h-full rounded-[10px] object-cover"
+                      className="w-full h-auto rounded-[10px] object-cover"
                     />
                   </div>
                   <div className="flex flex-col justify-between items-start w-[85%] h-[70%] py-3 px-2 pr-4">

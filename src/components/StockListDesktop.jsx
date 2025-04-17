@@ -39,7 +39,7 @@ export default function StockListDesktop({ stocks, isEditing, setStocks }) {
                     stock.product.Image || "/images/elements/default-product.jpg"
                   }
                   alt={stock.product?.Label}
-                  className="w-auto h-full rounded-[5px] object-cover"
+                  className="w-full h-auto rounded-[5px] object-cover"
                 />
               </div>
               <div className="flex justify-between items-center w-[85%] h-full py-3 px-2 pr-4">
