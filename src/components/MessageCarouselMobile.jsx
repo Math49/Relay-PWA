@@ -30,7 +30,7 @@ export default function MessageCarouselMobile({ storeId }) {
 
   return (
       <div className="relative flex flex-col items-center w-[90vw] max-w-lg mx-auto p-4 C-bg-red rounded-[20px]">
-        <div className="absolute rounded-[30px] C-bg-red-var2 w-[85vw] h-[10vh] bottom-[-1vh] z-[-1]"></div>
+        <div className="absolute rounded-[30px] C-bg-red-var2 w-[85vw] h-[5vh] bottom-[-1vh] z-[-1]"></div>
       <div className="text-white w-full rounded-3xl p-6 relative flex items-start">
         <AnimatePresence mode="wait">
           {messages.length > 0 && (
