@@ -1,5 +1,5 @@
 "use client";
-import Separateur from "@/components/Separateur";
+import Separateur from "@/components/elements/Separateur";
 import { useAuth } from "@/context/AuthProvider";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
@@ -7,8 +7,8 @@ import { useMediaQuery } from "@/hooks/useMediaQuery";
 import { getStocks } from "@/services/stock";
 import { getCategories } from "@/services/category";
 import Footer from "@/components/Footer";
-import MessageCarouselMobile from "@/components/MessageCarouselMobile";
-import MessageCarouselDesktop from "@/components/MessageCarouselDesktop";
+import MessageCarouselMobile from "@/components/elements/MessageCarouselMobile";
+import MessageCarouselDesktop from "@/components/elements/MessageCarouselDesktop";
 
 export default function HomePage() {
   const [stocks, setStocks] = useState([]);

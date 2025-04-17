@@ -1,8 +1,8 @@
 "use client";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
-import BackButton from "@/components/BackButton";
-import CreateProductModal from "@/components/CreateProductModal";
+import BackButton from "@/components/elements/BackButton";
+import CreateProductModal from "@/components/modals/CreateProductModal";
 import { motion, AnimatePresence } from "framer-motion";
 import { Modal, ModalContent } from "@heroui/react";
 

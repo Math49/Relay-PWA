@@ -1,13 +1,13 @@
 "use client";
-import BackButton from "@/components/BackButton";
+import BackButton from "@/components/elements/BackButton";
 import React, { useState, useEffect } from "react";
 import { getStocks } from "@/services/stock";
 import { getCategories } from "@/services/category";
 import { useAuth } from "@/context/AuthProvider";
-import Separateur from "@/components/Separateur";
+import Separateur from "@/components/elements/Separateur";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
-import StockCreateListDesktop from "@/components/StockCreateListDesktop";
-import StockCreateListMobile from "@/components/StockCreateListMobile";
+import StockCreateListDesktop from "@/components/modals/StockCreateListDesktop";
+import StockCreateListMobile from "@/components/modals/StockCreateListMobile";
 import {createList} from "@/services/listes";
 
 export default function HomePage() {

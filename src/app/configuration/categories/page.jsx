@@ -14,18 +14,18 @@ import {
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
 import { restrictToVerticalAxis } from "@dnd-kit/modifiers";
-import DraggableCategory from "@/components/DraggableCategory";
+import DraggableCategory from "@/components/elements/DraggableCategory";
 import { useAuth } from "@/context/AuthProvider";
 import {
   getCategories,
   deleteCategory,
   updateCategoriesPositions,
 } from "@/services/category";
-import BackButton from "@/components/BackButton";
+import BackButton from "@/components/elements/BackButton";
 import { Modal, ModalContent } from "@heroui/react";
 import { AnimatePresence, motion } from "framer-motion";
-import AddCategory from "@/components/AddCategory";
-import CreateCategory from "@/components/CreateCategory";
+import AddCategory from "@/components/modals/AddCategory";
+import CreateCategory from "@/components/modals/CreateCategory";
 
 export default function HomePage() {
   const [categories, setCategories] = useState([]);

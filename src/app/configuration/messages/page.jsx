@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import BackButton from "@/components/BackButton";
+import BackButton from "@/components/elements/BackButton";
 import { motion, AnimatePresence } from "framer-motion";
 import { Modal, ModalContent } from "@heroui/react";
 import { useAuth } from "@/context/AuthProvider";

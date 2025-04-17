@@ -7,9 +7,9 @@ import { getSpecificList, deleteList } from "@/services/listes";
 import { getCategories } from "@/services/category";
 import { getStocks, putStocks } from "@/services/stock";
 import { updateList } from "@/services/listes";
-import BackButton from "@/components/BackButton";
-import Separateur from "@/components/Separateur";
-import FloatingButtonList from "@/components/FloatingButtonList";
+import BackButton from "@/components/elements/BackButton";
+import Separateur from "@/components/elements/Separateur";
+import FloatingButtonList from "@/components/elements/FloatingButtonList";
 
 export default function HomePage() {
   const [isEditing, setIsEditing] = useState(false);

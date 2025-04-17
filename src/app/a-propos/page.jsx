@@ -1,7 +1,7 @@
 "use client";
 import React, { use, useEffect, useState } from "react";
 import Footer from "@/components/Footer";
-import BackButton from "@/components/BackButton";
+import BackButton from "@/components/elements/BackButton";
 import { useAuth } from "@/context/AuthProvider";
 import { getStore } from "@/services/store";
 

@@ -1,5 +1,5 @@
 "use client";
-import NavMenu from "@/components/NavMenu";
+import NavMenu from "@/components/elements/NavMenu";
 import { useAuth } from "@/context/AuthProvider";
 import "@/styles/globals.css";
 import React, { useState, useEffect } from "react";

@@ -1,16 +1,16 @@
 "use client";
-import BackButton from "@/components/BackButton";
+import BackButton from "@/components/elements/BackButton";
 import React, { useState, useEffect } from "react";
 import { getStocks, addStock } from "@/services/stock";
 import { getCategories } from "@/services/category";
 import { useAuth } from "@/context/AuthProvider";
-import Separateur from "@/components/Separateur";
+import Separateur from "@/components/elements/Separateur";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
-import StockListDesktop from "@/components/StockListDesktop";
-import StockListMobile from "@/components/StockListMobile";
-import FloatingButtonStock from "@/components/FloatingButtonStock";
+import StockListDesktop from "@/components/modals/StockListDesktop";
+import StockListMobile from "@/components/modals/StockListMobile";
+import FloatingButtonStock from "@/components/elements/FloatingButtonStock";
 import { putStocks } from "@/services/stock";
-import AddStockModal from "@/components/AddStockModal";
+import AddStockModal from "@/components/modals/AddStockModal";
 import { motion, AnimatePresence } from "framer-motion";
 import { Modal, ModalContent } from "@heroui/react";
 

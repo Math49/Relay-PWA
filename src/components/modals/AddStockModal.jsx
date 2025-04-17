@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import { getProducts } from "@/services/product";
 import { getCategories } from "@/services/category";
 import { useAuth } from "@/context/AuthProvider";
-import Separateur from "./Separateur";
+import Separateur from "../elements/Separateur";
 import Cookies from "js-cookie";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
 
