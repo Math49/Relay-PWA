@@ -13,9 +13,4 @@ app.prepare().then(() => {
     handle(req, res, parsedUrl)
   }).listen(port)
  
-  console.log(
-    `> Server listening at http://localhost:${port} as ${
-      dev ? 'development' : process.env.NODE_ENV
-    }`
-  )
 })

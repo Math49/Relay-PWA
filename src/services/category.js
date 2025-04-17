@@ -41,7 +41,6 @@ export async function createCategory(Label) {
 
 export async function createCategoryEnable(ID_store, ID_category, Category_position) {
     try {
-        console.log(ID_store, ID_category, Category_position);
         const res = await fetchData(`/categoryEnable/${ID_store}`, {
             method: "POST",
             body: JSON.stringify({
@@ -60,7 +59,6 @@ export async function updateCategoriesPositions(ID_store, categories) {
     try {
 
         for (const cat of categories) {
-            console.log(cat.ID_category, categories.indexOf(cat)+1);
             await fetchData(`/categoryEnable/${ID_store}/${cat.ID_category}`, {
                 method: "PUT",
                 body: JSON.stringify({

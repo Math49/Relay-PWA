@@ -79,7 +79,6 @@ export default function CreateProductModal({ closeModal }) {
       Barcode: cleanForm.Barcode.toString(),
     };
 
-    console.log("Envoi du produit:", payload);
 
     await createProduct(payload);
 

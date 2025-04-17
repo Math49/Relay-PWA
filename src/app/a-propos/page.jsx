@@ -30,11 +30,7 @@ export default function HomePage() {
 
     deferredPrompt.prompt();
     deferredPrompt.userChoice.then((choice) => {
-      if (choice.outcome === "accepted") {
-        console.log("✅ L'utilisateur a installé la PWA.");
-      } else {
-        console.log("❌ L'utilisateur a refusé l'installation.");
-      }
+      
       setDeferredPrompt(null);
       setShowButton(false);
     });

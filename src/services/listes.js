@@ -40,7 +40,6 @@ export async function createList(ID_store, list) {
     };
 
     try {
-        console.log("Creating list with data:", data);
         const res = await fetchData(`/list`, {
             method: "POST",
             body: JSON.stringify(data),
@@ -48,7 +47,6 @@ export async function createList(ID_store, list) {
     
         return await res;
     } catch (error) {
-        console.log("Error creating list:", error);
         return null;
     }
 }
@@ -78,7 +76,6 @@ export async function updateList(ID_list, list) {
         
         return await res;
     } catch (error) {
-        console.log("Error updating list:", error);
         return null;
     }
 }

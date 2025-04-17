@@ -24,11 +24,7 @@ export default function InstallButton() {
     if (!deferredPrompt) return;
     deferredPrompt.prompt();
     deferredPrompt.userChoice.then((choice) => {
-      if (choice.outcome === "accepted") {
-        console.log("L'utilisateur a installé la PWA.");
-      } else {
-        console.log("L'utilisateur a refusé.");
-      }
+      
       setDeferredPrompt(null);
       setShowButton(false);
     });
