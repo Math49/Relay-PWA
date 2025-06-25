@@ -286,7 +286,7 @@ export default function AddStockModal({ onClose, onSubmit, createProduct }) {
           </div>
         )}
         <div className=" overflow-y-scroll w-full px-5 h-[40%] sm:w-full sm:h-full">
-          <div className="flex flex-col items-center w-full ">
+          <div className="flex flex-col items-center w-full">
             {pendingProducts.map((p) => (
               <div
                 key={p.ID_product}
@@ -347,7 +347,7 @@ export default function AddStockModal({ onClose, onSubmit, createProduct }) {
             ))}
             {pendingProducts.length > 0 && (
               <button
-                className="w-full mt-4 py-2 C-bg-red-var2 C-text-red font-bold rounded-full text-xl cursor-pointer"
+                className="w-full mt-4 py-2 C-bg-red-var2 C-text-red font-bold rounded-full text-xl cursor-pointer mb-[3vh]"
                 onClick={handleFinish}
               >
                 Terminé

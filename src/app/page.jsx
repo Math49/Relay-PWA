@@ -48,7 +48,9 @@ export default function HomePage() {
     // Regrouper les boîtes par catégorie et calculer le pourcentage
     categories.forEach((category) => {
       const totalBoitesCategorie = stocks
-        .filter((stock) => stock.product.ID_category === category.category.ID_category)
+        .filter(
+          (stock) => stock.product.ID_category === category.category.ID_category
+        )
         .reduce((sum, stock) => sum + stock.Nmb_boxes, 0);
 
       if (totalBoitesCategorie > 0) {
@@ -70,7 +72,11 @@ export default function HomePage() {
 
   return (
     <div className="flex flex-col gap-[5vh] items-center justify-center relative z-10 text-white w-[100%] p-5">
-        {isMobile ? <MessageCarouselMobile storeId={user?.ID_store} /> : <MessageCarouselDesktop storeId={user?.ID_store} />}
+      {isMobile ? (
+        <MessageCarouselMobile storeId={user?.ID_store} />
+      ) : (
+        <MessageCarouselDesktop storeId={user?.ID_store} />
+      )}
       {isMobile ? (
         <div className="flex flex-col items-start justify-start w-[100%]">
           <h2 className="C-text-black font-bold text-2xl mb-6">Navigation</h2>
@@ -79,10 +85,16 @@ export default function HomePage() {
               href="/stocks"
               className="flex items-center justify-around w-[100%] h-[12vh] C-bg-red-var2 rounded-[20px] p-4 overflow-hidden relative"
             >
-              <i className="fa-solid fa-boxes-stacked C-text-red-var1 text-5xl" aria-hidden="true"></i>
+              <i
+                className="fa-solid fa-boxes-stacked C-text-red-var1 text-5xl"
+                aria-hidden="true"
+              ></i>
               <p className="C-text-black font-bold text-2xl">Stocks</p>
               <div className="flex items-end h-[100%] relative z-20">
-                <i className="fa-solid fa-arrow-right-long C-text-black text-3xl" aria-hidden="true"></i>
+                <i
+                  className="fa-solid fa-arrow-right-long C-text-black text-3xl"
+                  aria-hidden="true"
+                ></i>
               </div>
               <img
                 src="/images/elements/cercle_var2.svg"
@@ -93,10 +105,16 @@ export default function HomePage() {
               href="/listes"
               className="flex items-center justify-around w-[100%] h-[12vh] C-bg-red-var2 rounded-[20px] p-4 overflow-hidden relative"
             >
-              <i className="fa-solid fa-clipboard-list C-text-red-var1 text-5xl" aria-hidden="true"></i>
+              <i
+                className="fa-solid fa-clipboard-list C-text-red-var1 text-5xl"
+                aria-hidden="true"
+              ></i>
               <p className="C-text-black font-bold text-2xl">Listes</p>
               <div className="flex items-end h-[100%] relative z-20">
-                <i className="fa-solid fa-arrow-right-long C-text-black text-3xl" aria-hidden="true"></i>
+                <i
+                  className="fa-solid fa-arrow-right-long C-text-black text-3xl"
+                  aria-hidden="true"
+                ></i>
               </div>
               <img
                 src="/images/elements/vague_var2.svg"
@@ -107,10 +125,16 @@ export default function HomePage() {
               href="/configuration"
               className="flex items-center justify-around w-[100%] h-[12vh] C-bg-red-var2 rounded-[20px] p-4 overflow-hidden relative"
             >
-              <i className="fa-solid fa-gears C-text-red-var1 text-5xl" aria-hidden="true"></i>
+              <i
+                className="fa-solid fa-gears C-text-red-var1 text-5xl"
+                aria-hidden="true"
+              ></i>
               <p className="C-text-black font-bold text-2xl">Configuration</p>
               <div className="flex items-end h-[100%] relative z-20">
-                <i className="fa-solid fa-arrow-right-long C-text-black text-3xl" aria-hidden="true"></i>
+                <i
+                  className="fa-solid fa-arrow-right-long C-text-black text-3xl"
+                  aria-hidden="true"
+                ></i>
               </div>
               <img
                 src="/images/elements/barcode_var2.svg"
@@ -121,10 +145,16 @@ export default function HomePage() {
               href="/a-propos"
               className="flex items-center justify-around w-[100%] h-[12vh] C-bg-red-var2 rounded-[20px] p-4 overflow-hidden relative"
             >
-              <i className="fa-solid fa-store C-text-red-var1 text-5xl" aria-hidden="true"></i>
+              <i
+                className="fa-solid fa-store C-text-red-var1 text-5xl"
+                aria-hidden="true"
+              ></i>
               <p className="C-text-black font-bold text-2xl">A propos</p>
               <div className="flex items-end h-[100%] relative z-20">
-                <i className="fa-solid fa-arrow-right-long C-text-black text-3xl" aria-hidden="true"></i>
+                <i
+                  className="fa-solid fa-arrow-right-long C-text-black text-3xl"
+                  aria-hidden="true"
+                ></i>
               </div>
               <img
                 src="/images/elements/rond_var2.svg"

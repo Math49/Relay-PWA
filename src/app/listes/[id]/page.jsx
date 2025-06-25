@@ -218,7 +218,7 @@ export default function HomePage() {
                           </div>
                         </div>
                       </div>
-                      <div className="flex flex-col items-center gap-3 sm:gap-5 text-lg pr-4 justify-center w-[20%]">
+                      <div className="flex flex-col items-center gap-3 text-lg pr-4 justify-center w-[20%]">
                         <div className="flex items-center gap-1">
                           <i className="fa-solid fa-box C-text-red text-2xl" />
                           {isEditing ? (
@@ -288,38 +288,70 @@ export default function HomePage() {
           </div>
         );
       })}
-      <div className="print-area hidden-print">
-  <h2 className="text-center text-xl font-bold mb-4 print-title">
-    {formatDate(liste.created_at)}
-  </h2>
 
-  <table className="print-table">
-    <thead>
-      <tr>
-        <th>Produit</th>
-        <th>Code-barre</th>
-        <th>Boîtes</th>
-        <th>Unités</th>
-      </tr>
-    </thead>
-    <tbody>
-      {liste.product_lists.map((p) => (
-        <tr key={p.ID_product}>
-          <td>{p.product?.Label}</td>
-          <td>{p.product?.Barcode}</td>
-          <td>{Math.floor(p.Quantity / p.product.Box_quantity)}</td>
-            <td>
-            {p.product.Packing === 1 ? (
-              <span className="C-text-black font-bold">✗</span>
-            ) : (
-              Math.floor(p.Quantity % p.product.Box_quantity)
-            )}
-            </td>
-        </tr>
-      ))}
-    </tbody>
-  </table>
-</div>
+      
+      <div className="print-area hidden-print">
+        <h2 className="text-center text-xl font-bold mb-4 print-title">
+          {formatDate(liste.created_at)}
+        </h2>
+
+        <table className="print-table">
+          <thead>
+            <tr>
+              <th>Produit</th>
+              <th>Code-barre</th>
+              <th>Boîtes</th>
+              <th>Unités</th>
+            </tr>
+          </thead>
+          <tbody>
+            {categories.map((cat) => {
+              const produits = liste.product_lists.filter(
+                (p) => p.product?.ID_category === cat.ID_category
+              );
+              if (produits.length === 0) return null;
+
+              return (
+                <React.Fragment key={cat.ID_category}>
+                  <tr>
+                    <td colSpan={4} style={{ fontWeight: "bold", background: "#f3f3f3" }}>
+                      {cat.category?.Label}
+                    </td>
+                  </tr>
+                  {produits.map((p) => (
+                    <tr key={p.ID_product}>
+                      <td>{p.product?.Label}</td>
+                      <td>{p.product?.Barcode}</td>
+                      <td>
+                        {Math.floor(
+                          (editedQuantities[p.ID_product] ?? p.Quantity) /
+                            p.product.Box_quantity
+                        )}
+                      </td>
+                      <td>
+                        {p.product.Packing === 0
+                          ? (editedQuantities[p.ID_product] ?? p.Quantity) %
+                            p.product.Box_quantity
+                          : (
+                              <span
+                                style={{
+                                  display: "inline-block",
+                                  width: "18px",
+                                  height: "18px",
+                                  background: "#e53e3e",
+                                  borderRadius: "4px",
+                                }}
+                              ></span>
+                            )}
+                      </td>
+                    </tr>
+                  ))}
+                </React.Fragment>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 }

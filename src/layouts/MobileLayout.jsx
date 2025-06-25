@@ -34,7 +34,6 @@ export default function MobileLayout({ children, title }) {
 
   return (
     <div className="flex flex-col items-center C-bg-red w-full min-h-screen">
-      {/* HEADER */}
       <div className="flex items-end justify-between w-full h-[10vh] pb-[2vh] relative z-20 px-[5vw]">
         <button onClick={openModal} className="cursor-pointer">
           <img src="/images/elements/Nav menu.svg" className="w-auto h-[5vh]" />
@@ -44,7 +43,6 @@ export default function MobileLayout({ children, title }) {
         <div className="w-[10vw]"></div>
       </div>
 
-      {/* MODAL */}
       <AnimatePresence>
         {isOpen && (
           <Modal
@@ -74,7 +72,6 @@ export default function MobileLayout({ children, title }) {
         )}
       </AnimatePresence>
 
-      {/* CONTENEUR SCROLLABLE */}
       <div className="flex flex-col w-full flex-1 C-bg-white rounded-t-[40px]">
         {children}
       </div>

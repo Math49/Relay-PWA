@@ -15,9 +15,6 @@ export async function getProducts() {
 }
 
 export async function createProduct(data) {
-
-
-
     try {
         const res = await fetchData("/product", {
             method: "POST",

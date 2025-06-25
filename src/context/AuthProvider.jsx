@@ -10,7 +10,7 @@ export function AuthProvider({ children }) {
   const [token, setToken] = useState(getAuthToken());
   const router = useRouter();
 
-  // ✅ Charger user depuis localStorage après le montage
+ 
   useEffect(() => {
     if (typeof window !== "undefined") {
       const storedUser = localStorage.getItem("user");

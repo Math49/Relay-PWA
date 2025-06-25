@@ -18,7 +18,7 @@ export default function StockListDesktop({ stocks, isEditing, setStocks }) {
 
   return (
     <div className="w-full flex flex-col items-center mt-2">
-      <div className="w-[70%] text-black font-bold text-sm flex justify-end gap-[30px] mb-2 px-3">
+      <div className="w-[70%] text-black font-bold text-sm flex justify-end gap-[5vw] mb-2 px-3">
         <span className="col-span-2">Produit</span>
         <span className="text-center">Par boîte</span>
         <span className="text-center">En rayon</span>
@@ -30,10 +30,9 @@ export default function StockListDesktop({ stocks, isEditing, setStocks }) {
         {stocks.map((stock) => (
           <div
             key={stock.ID_stock}
-            className="bg-white w-[90%] rounded-[10px] border-[2px] C-border-red mb-2 overflow-hidden transition-all duration-300"
+            className="bg-white flex w-[90%] min-h-min rounded-[10px] border-[2px] C-border-red mb-2 transition-all duration-300"
           >
-            <div className="flex h-[5vh]">
-              <div className="flex items-center justify-center h-full gap-3 border-r-black border-r-[1px] w-[10%]">
+              <div className="flex items-center justify-center overflow-hidden gap-3 border-r-black border-r-[1px] w-[10%]">
                 <img
                   src={
                     stock.product.Image || "/images/elements/default-product.jpg"
@@ -146,7 +145,6 @@ export default function StockListDesktop({ stocks, isEditing, setStocks }) {
                       checked={stock.product.Packing === 1}
                     />
                   </div>
-                </div>
               </div>
             </div>
           </div>

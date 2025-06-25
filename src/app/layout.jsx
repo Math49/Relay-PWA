@@ -56,7 +56,7 @@ export default function RootLayout({ children }) {
       break;
   }
 
-  // 🔥 Si on est sur "/login", ne pas appliquer de layout
+
   if (pathname.startsWith("/login")) {
     return <>{children}</>;
   }
